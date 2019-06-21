@@ -13,9 +13,6 @@
   },
   "dependencies": {
     "luxon": "^1.16.0",
-    "mobx": "^5.10.1",
-    "mobx-react": "^6.1.1",
-    "mobx-state-tree": "^3.14.0",
     "native-base": "^2.12.1",
     "react": "16.8.3",
     "react-native": "0.59.9",
