@@ -1,17 +1,9 @@
 import { Container, Content, Icon, List, ListItem, Picker, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
-import uuid from 'uuid';
+import { connect } from 'react-redux';
 
-const categories = [
-  { id: uuid(), name: 'Food', type: 'outcome' },
-  { id: uuid(), name: 'Entertainments', type: 'outcome' },
-  { id: uuid(), name: 'Education', type: 'outcome' },
-  { id: uuid(), name: 'Salary', type: 'income' },
-  { id: uuid(), name: 'Deposit', type: 'income' }
-];
-
-export class CategoriesScreen extends Component {
+export class CategoriesScreen extends Component<{ categories: any[] }> {
   public state = {
     selected: 'ALL'
   };
@@ -40,9 +32,12 @@ export class CategoriesScreen extends Component {
           </View>
           <View>
             <List>
-              {categories
-                .filter(category =>
-                  this.state.selected === 'ALL' || this.state.selected.toLowerCase() === category.type.toLowerCase()
+              {this.props.categories
+                .filter(
+                  category =>
+                    this.state.selected === 'ALL' ||
+                    this.state.selected.toLowerCase() ===
+                      category.type.toLowerCase()
                 )
                 .map(category => (
                   <ListItem key={category.id}>
@@ -92,4 +87,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CategoriesScreen;
+export default connect(
+  (state: any) => ({ categories: state.categories } as any),
+  () => ({})
+)(CategoriesScreen);

@@ -1,4 +1,4 @@
-import { Button, Container, Content, Icon, Text, View } from 'native-base';
+import { Container, Content, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -29,8 +29,8 @@ export class WalletDetailScreen extends Component<NavigationInjectedProps> {
               <Text style={styles.accountHeaderFilter}>ALL</Text>
             </View>
             <View style={styles.wallets}>
-              <WalletShortInfo />
-              <WalletShortInfo />
+              {/* <WalletShortInfo /> */}
+              {/* <WalletShortInfo /> */}
             </View>
           </View>
         </Content>
