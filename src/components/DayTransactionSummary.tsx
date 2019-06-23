@@ -47,8 +47,6 @@ export class DayTransactionSummary extends Component<DayTransactionSummaryProps>
               {i < transactions.length && <View style={styles.trxSplitter} />}
             </Fragment>
           ))}
-
-          
         </View>
       </View>
     );

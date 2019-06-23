@@ -2,7 +2,7 @@ import { Icon } from 'native-base';
 import React from 'react';
 import { createBottomTabNavigator, TabBarIconProps } from 'react-navigation';
 import SettingsScreen from '../SettingsScreen';
-import TransactionsScreen from '../TransactionsScreen';
+import TransactionsTab from './TransactionsTab';
 import CategoriesTab from './CategoriesTab';
 import ChartsTab from './ChartsTab';
 import WalletsTab from './WalletsTab';
@@ -22,7 +22,7 @@ export default createBottomTabNavigator(
       }
     },
     Transactions: {
-      screen: TransactionsScreen,
+      screen: TransactionsTab,
       navigationOptions: {
         tabBarIcon: (props: TabBarIconProps) => (
           <Icon
