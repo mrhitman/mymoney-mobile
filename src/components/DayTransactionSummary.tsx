@@ -1,46 +1,54 @@
 import { Text, View, Icon } from 'native-base';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { StyleSheet } from 'react-native';
 import { DateTime } from 'luxon';
+import ITransaction from '../types/Transaction';
 
 export interface DayTransactionSummaryProps {
   day: DateTime;
+  transactions: ITransaction[];
 }
 
 export class DayTransactionSummary extends Component<DayTransactionSummaryProps> {
-  render() {
-    const { day } = this.props;
+  protected numberWithCommas(x: number) {
+    const s = x > 0 ? `+${x}` : x.toString();
+    return s.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  public render() {
+    const { day, transactions } = this.props;
     const dayTitle = day.toFormat('dd LLLL').toUpperCase();
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerText}> {dayTitle}, {this.getAdditionTitle()}</Text>
-          <Text style={styles.headerText}>+12354 $</Text>
+          <Text style={styles.headerText}>
+            {this.numberWithCommas(
+              transactions.reduce((acc: number, trx: ITransaction) => acc + trx.amount, 0)
+            )} $
+          </Text>
         </View>
 
         <View style={styles.dayContainer}>
-          <View style={styles.trxContainer}>
-            <View style={styles.operation}>
-              <Text style={styles.operationName}>Coffee</Text>
-              <Text style={styles.outcomeAmount}>-321 $</Text>
-            </View>
-            <View style={styles.wallet}>
-              <Icon type="Entypo" name="wallet" style={styles.walletIcon} />
-              <Text style={styles.walletName}>Wallet</Text>
-            </View>
-          </View>
-          <View style={styles.trxSplitter} />
-          <View style={styles.trxContainer}>
-            <View style={styles.operation}>
-              <Text style={styles.operationName}>Salary</Text>
-              <Text style={styles.incomeAmount}>+321 $</Text>
-            </View>
-            <View style={styles.wallet}>
-              <Icon type="Entypo" name="credit-card" style={styles.walletIcon} />
-              <Text style={styles.walletName}>Wallet</Text>
-            </View>
-          </View>
+
+          {transactions.map((trx: ITransaction, i) => (
+            <Fragment key={trx.id}>
+              <View style={styles.trxContainer}>
+                <View style={styles.operation}>
+                  <Text style={styles.operationName}>Coffee</Text>
+                  <Text style={styles.outcomeAmount}>{trx.amount} $</Text>
+                </View>
+                <View style={styles.wallet}>
+                  <Icon type="Entypo" name="wallet" style={styles.walletIcon} />
+                  <Text style={styles.walletName}>Wallet</Text>
+                </View>
+              </View>
+              {i < transactions.length && <View style={styles.trxSplitter} />}
+            </Fragment>
+          ))}
+
+          
         </View>
       </View>
     );

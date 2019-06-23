@@ -1,20 +1,30 @@
-import { Button, Container, Content, Icon, Text, View } from 'native-base';
+import { chain, map } from 'lodash';
+import { DateTime } from 'luxon';
+import { Container, Content } from 'native-base';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
+import { connect } from 'react-redux';
 import DayTransactionSummary from '../components/DayTransactionSummary';
-import { DateTime } from 'luxon';
+import ITransaction from '../types/Transaction';
 
-export class TransactionsScreen extends Component<NavigationInjectedProps> {
+interface TransactionsScreenProps extends NavigationInjectedProps {
+  transactions: any[];
+}
 
+export class TransactionsScreen extends Component<TransactionsScreenProps> {
   public render() {
+    const transactions = chain(this.props.transactions)
+      .groupBy((trx: ITransaction) => trx.date.startOf('day'))
+      .value();
+
     return (
       <Container style={styles.content}>
         <StatusBar barStyle="light-content" animated />
         <Content padder>
-          <DayTransactionSummary day={DateTime.local()} />
-          <DayTransactionSummary day={DateTime.local().minus({ day: 1 })} />
-          <DayTransactionSummary day={DateTime.local().minus({ day: 2 })} />
+          {map(transactions, (group: ITransaction[], key: string) => (
+            <DayTransactionSummary key={key} transactions={group} day={DateTime.fromISO(key)} />
+          ))}
         </Content>
       </Container>
     );
@@ -27,4 +37,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TransactionsScreen
+export default connect(
+  state => state,
+  () => ({})
+)(TransactionsScreen);
