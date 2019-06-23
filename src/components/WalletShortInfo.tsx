@@ -1,7 +1,6 @@
-import { Text, View } from 'native-base';
+import { Text, View, Icon } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import SvgUri from 'react-native-svg-uri';
 import IWallet from '../types/Wallet';
 
 export class WalletShortInfo extends Component<{ wallet: IWallet }> {
@@ -12,19 +11,20 @@ export class WalletShortInfo extends Component<{ wallet: IWallet }> {
         <Text style={styles.header}>{wallet.name}</Text>
         <View style={styles.info}>
           <View style={styles.icon}>
-            <SvgUri
-              width="42"
-              height="42"
-              source={{ uri: 'http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg' }}
-            />
+            <Icon {...wallet.icon} style={{ color: wallet.color, fontSize: 42 }} />
           </View>
-          <View style={styles.details}>
-            <Text>pocket.currency</Text>
-            <Text>9999</Text>
+          <View style={styles.pockets}>
+            {wallet.pockets.map(pocket => (
+              <View key={pocket.id} style={styles.details}>
+                <Text style={styles.pocketInfo}>
+                  {pocket.amount} {pocket.currency}
+                </Text>
+              </View>
+            ))}
           </View>
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -36,17 +36,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderWidth: 0.6,
     borderColor: 'rgba(0,0,0,0.3)',
-    borderRadius: 10,
+    borderRadius: 12
   },
   header: {
     fontFamily: 'Questrial-Regular',
-    fontSize: 18,
-    paddingLeft: 12,
-    paddingTop: 8,
-    paddingBottom: 8,
+    fontSize: 17,
+    paddingLeft: 18,
+    paddingTop: 10,
+    paddingBottom: 6
   },
   icon: {
-    margin: 16
+    margin: 24,
+    marginTop: 14
   },
   info: {
     flex: 1,
@@ -56,10 +57,19 @@ const styles = StyleSheet.create({
   details: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    flexWrap: 'nowrap',
-    marginRight: 26
+    justifyContent: 'flex-end',
+    flexWrap: 'nowrap'
+  },
+  pockets: {
+    marginRight: 24,
+    marginBottom: 12
+  },
+  pocketInfo: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    fontFamily: 'Questrial-Regular',
+    color: 'rgba(0,0,0,0.7)'
   }
 });
 
-export default WalletShortInfo
+export default WalletShortInfo;
