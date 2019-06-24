@@ -1,6 +1,6 @@
 import { chain, map } from 'lodash';
 import { DateTime } from 'luxon';
-import { ActionSheet, Button, Container, Content, Footer, Icon, Right } from 'native-base';
+import { Button, Container, Content, Footer, Icon, Right } from 'native-base';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -8,16 +8,12 @@ import { connect } from 'react-redux';
 import DayTransactionSummary from '../components/DayTransactionSummary';
 import ITransaction from '../types/Transaction';
 
-const BUTTONS = ['Income', 'Expence', 'Move', 'Cancel'];
-const CANCEL_INDEX = 3;
-
 interface TransactionsScreenProps extends NavigationInjectedProps {
   transactions: any[];
 }
 
 export class TransactionsScreen extends Component<TransactionsScreenProps> {
   public render() {
-    global.console.log(this.props);
     const transactions = chain(this.props.transactions)
       .groupBy((trx: ITransaction) => trx.date.startOf('day'))
       .value();
@@ -54,17 +50,7 @@ export class TransactionsScreen extends Component<TransactionsScreenProps> {
   }
 
   protected handlePlusClick = () => {
-    ActionSheet.show(
-      {
-        options: BUTTONS,
-        cancelButtonIndex: CANCEL_INDEX,
-        title: 'Create new'
-      },
-      buttonIndex => {
-        // this.setState({ clicked: BUTTONS[buttonIndex] });
-        this.props.navigation.navigate('TransactionAdd');
-      }
-    );
+    this.props.navigation.navigate('TransactionAdd');
   };
 }
 

@@ -5,4 +5,11 @@ const initialState = {
   language: 'UA'
 };
 
-export default (state = initialState) => state;
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case 'TRANSACTION_ADD':
+      return { ...state, totalAmount: action.payload.amount };
+    default:
+      return state;
+  }
+};

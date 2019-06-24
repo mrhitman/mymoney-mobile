@@ -1,7 +1,7 @@
-import uuid from 'uuid';
 import { find } from 'lodash';
-import { defaultCategories } from './categories';
 import { DateTime } from 'luxon';
+import uuid from 'uuid';
+import { defaultCategories } from './categories';
 import { defaultWallets } from './wallets';
 
 const initialState = [
@@ -62,4 +62,19 @@ const initialState = [
   }
 ];
 
-export default (state = initialState) => state;
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case 'TRANSACTION_ADD':
+      return [
+        ...state,
+        {
+          ...action.payload,
+          id: uuid(),
+          date: DateTime.local(),
+          currency: '$'
+        }
+      ];
+    default:
+      return state;
+  }
+};
