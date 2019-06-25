@@ -25,7 +25,7 @@ export class TransactionsScreen extends Component<TransactionsScreenProps> {
           {map(transactions, (group: ITransaction[], key: string) => (
             <DayTransactionSummary
               key={key}
-              transactions={group}
+              items={group}
               day={DateTime.fromISO(key)}
             />
           ))}

@@ -12,7 +12,7 @@ const initialState = [
       category => category.name === 'Coffee'
     )!.id,
     date: DateTime.local(),
-    wallet_id: defaultWallets[0].id,
+    from_wallet_id: defaultWallets[0].id,
     amount: -368,
     currency: '$'
   },
@@ -23,7 +23,7 @@ const initialState = [
       category => category.name === 'Salary'
     )!.id,
     date: DateTime.local(),
-    wallet_id: defaultWallets[0].id,
+    from_wallet_id: defaultWallets[0].id,
     amount: 2342,
     currency: '$'
   },
@@ -34,7 +34,7 @@ const initialState = [
       category => category.name === 'Coffee'
     )!.id,
     date: DateTime.local().minus({ day: 1 }),
-    wallet_id: defaultWallets[0].id,
+    from_wallet_id: defaultWallets[0].id,
     amount: -389,
     currency: '$'
   },
@@ -45,7 +45,7 @@ const initialState = [
       category => category.name === 'Coffee'
     )!.id,
     date: DateTime.local().minus({ day: 1 }),
-    wallet_id: defaultWallets[0].id,
+    from_wallet_id: defaultWallets[0].id,
     amount: -389,
     currency: '$'
   },
@@ -56,13 +56,14 @@ const initialState = [
       category => category.name === 'Salary'
     )!.id,
     date: DateTime.local().minus({ day: 1 }),
-    wallet_id: defaultWallets[0].id,
+    from_wallet_id: defaultWallets[0].id,
     amount: 2356,
     currency: '$'
   }
 ];
 
 export default (state = initialState, action) => {
+  global.console.log(action.payload)
   switch (action.type) {
     case 'TRANSACTION_ADD':
       return [

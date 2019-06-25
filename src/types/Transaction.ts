@@ -2,7 +2,8 @@ interface ITransaction {
   id: string;
   category_id: string;
   date: any;
-  wallet_id: string;
+  from_wallet_id: string;
+  to_wallet_id: string;
   amount: number;
   currency: string;
 }

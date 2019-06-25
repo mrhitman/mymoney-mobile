@@ -1,22 +1,29 @@
-import { Text, View, Icon } from 'native-base';
+import { DateTime } from 'luxon';
+import { Icon, Text, View } from 'native-base';
 import React, { Component, Fragment } from 'react';
 import { StyleSheet } from 'react-native';
-import { DateTime } from 'luxon';
+import { connect } from 'react-redux';
+import ICategory from '../types/Category';
 import ITransaction from '../types/Transaction';
+import IWallet from '../types/Wallet';
 
 export interface DayTransactionSummaryProps {
   day: DateTime;
-  transactions: ITransaction[];
+  items: ITransaction[];
+  getCategory: (id: string) => ICategory;
+  getWallet: (id: string) => IWallet;
 }
 
-export class DayTransactionSummary extends Component<DayTransactionSummaryProps> {
+export class DayTransactionSummary extends Component<
+  DayTransactionSummaryProps
+> {
   protected numberWithCommas(x: number) {
     const s = x > 0 ? `+${x}` : x.toString();
-    return s.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return s.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   public render() {
-    const { day, transactions } = this.props;
+    const { day, items, getWallet, getCategory } = this.props;
     const dayTitle = day.toFormat('dd LLLL').toUpperCase();
 
     return (
@@ -24,31 +31,38 @@ export class DayTransactionSummary extends Component<DayTransactionSummaryProps>
         <View style={styles.header}>
           <Text style={styles.headerText}> {dayTitle}, {this.getAdditionTitle()}</Text>
           <Text style={styles.headerText}>
-            {this.numberWithCommas(
-              transactions.reduce((acc: number, trx: ITransaction) => acc + trx.amount, 0)
-            )} $
+            {this.getTotal()} $
           </Text>
         </View>
 
         <View style={styles.dayContainer}>
-
-          {transactions.map((trx: ITransaction, i) => (
+          {items.map((trx: ITransaction, i) => (
             <Fragment key={trx.id}>
               <View style={styles.trxContainer}>
                 <View style={styles.operation}>
-                  <Text style={styles.operationName}>Coffee</Text>
+                  <Text style={styles.operationName}>{getCategory(trx.category_id).name}</Text>
                   <Text style={styles.outcomeAmount}>{trx.amount} $</Text>
                 </View>
                 <View style={styles.wallet}>
-                  <Icon type="Entypo" name="wallet" style={styles.walletIcon} />
-                  <Text style={styles.walletName}>Wallet</Text>
+                  <Icon
+                    {...getWallet(trx.from_wallet_id).icon}
+                    style={[styles.walletIcon, { color: getWallet(trx.from_wallet_id).color }]}
+                  />
+                  <Text style={styles.walletName}>{getWallet(trx.from_wallet_id).name}</Text>
                 </View>
               </View>
-              {i < transactions.length && <View style={styles.trxSplitter} />}
+              {i < items.length && <View style={styles.trxSplitter} />}
             </Fragment>
           ))}
         </View>
       </View>
+    );
+  }
+
+  protected getTotal() {
+    const { items } = this.props;
+    return this.numberWithCommas(
+      items.reduce((acc: number, trx: ITransaction) => acc + trx.amount, 0)
     );
   }
 
@@ -90,7 +104,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     marginTop: 8,
-    marginBottom: 8,
+    marginBottom: 8
   },
   operationName: {
     fontFamily: 'Questrial-Regular',
@@ -116,7 +130,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: 5,
     paddingLeft: 12,
-    paddingRight: 12,
+    paddingRight: 12
   },
   walletName: {
     fontFamily: 'Questrial-Regular',
@@ -128,8 +142,7 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingRight: 10,
     paddingLeft: 6,
-    fontSize: 16,
-    color: 'rgb(255,150,170)'
+    fontSize: 16
   },
   dayContainer: {
     marginTop: 20,
@@ -139,12 +152,21 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   trxContainer: {
-    paddingBottom: 20,
+    paddingBottom: 20
   },
   trxSplitter: {
     borderBottomWidth: 0.6,
-    borderColor: 'rgba(0,0,0,0.3)',
+    borderColor: 'rgba(0,0,0,0.3)'
   }
 });
 
-export default DayTransactionSummary;
+export default connect(
+  (state: any) => ({
+    ...state,
+    getCategory: (id: string) =>
+      state.categories.find((category: ICategory) => category.id === id),
+    getWallet: (id: string) =>
+      state.wallets.find((wallet: IWallet) => wallet.id === id)
+  }),
+  () => ({})
+)(DayTransactionSummary);
