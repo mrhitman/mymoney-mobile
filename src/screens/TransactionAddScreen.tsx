@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { Button, Container, Content, Input, Item, Label, Text, View } from 'native-base';
+import { Button, Container, Content, Input, Item, Label, Text, View, CheckBox, Body, DatePicker } from 'native-base';
 import React, { Component } from 'react';
 import { Picker, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -54,7 +54,8 @@ export class TransactionAddScreen extends Component<
       from_wallet_id: wallets[0].id,
       to_wallet_id: '',
       category_id: categories[0].id,
-      description: ''
+      description: '',
+      date: new Date()
     };
   }
 
@@ -82,6 +83,15 @@ export class TransactionAddScreen extends Component<
                     value={props.values.amount}
                     onChangeText={props.handleChange('amount')}
                     style={styles.amountPicker}
+                  />
+                </Item>
+                <Item fixedLabel>
+                  <Label>Date & time</Label>
+                  <DatePicker
+                    defaultDate={props.values.date}
+                    onDateChange={(date: Date) => {
+                      props.setFieldValue('date', date);
+                    }}
                   />
                 </Item>
                 <Item picker fixedLabel>
@@ -123,7 +133,8 @@ export class TransactionAddScreen extends Component<
                       <Picker.Item label="Not selected" value="" />
                       {wallets
                         .filter(
-                          wallet => wallet.id !== props.values.from_wallet_id
+                          wallet =>
+                            wallet.id !== props.values.from_wallet_id
                         )
                         .map(wallet => (
                           <Picker.Item
@@ -174,12 +185,19 @@ export class TransactionAddScreen extends Component<
                     onChangeText={props.handleChange('description')}
                   />
                 </Item>
-                <Button success full onPress={props.handleSubmit}>
-                  <Text>Create</Text>
-                </Button>
-                <Button warning full onPress={props.handleReset}>
-                  <Text>Cancel</Text>
-                </Button>
+                <Item fixedLabel>
+                  <Label>Regular operation:</Label>
+                  <CheckBox style={{ margin: 12, marginRight: 20 }} />
+                </Item>
+
+                <View style={{ marginTop: 12 }}>
+                  <Button success full onPress={props.handleSubmit}>
+                    <Text>Create</Text>
+                  </Button>
+                  <Button warning full onPress={props.handleReset}>
+                    <Text>Cancel</Text>
+                  </Button>
+                </View>
               </>
             )}
           />

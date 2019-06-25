@@ -70,8 +70,8 @@ export default (state = initialState, action) => {
         {
           ...action.payload,
           id: uuid(),
-          date: DateTime.local(),
-          currency: '$'
+          currency: '$',
+          date: DateTime.fromJSDate(action.payload.date)
         }
       ];
     default:
