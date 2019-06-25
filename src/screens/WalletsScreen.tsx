@@ -12,6 +12,7 @@ interface IWalletScreenProps extends NavigationInjectedProps {
 }
 
 export class WalletsScreen extends Component<IWalletScreenProps> {
+
   public render() {
     return (
       <Container style={styles.content}>
@@ -25,7 +26,7 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
               bordered
               primary
               style={styles.addButton}
-              onPress={() => this.props.navigation.navigate('WalletAdd')}
+              onPress={this.handleWalletAdd}
             >
               <Icon name="add" style={styles.addIcon} />
             </Button>
@@ -47,6 +48,10 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
         </Content>
       </Container>
     );
+  }
+
+  private handleWalletAdd = () => {
+    this.props.navigation.navigate('WalletAdd');
   }
 
   private handleWalletPress = () => {

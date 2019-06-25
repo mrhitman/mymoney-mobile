@@ -3,7 +3,9 @@ import { Icon, Text, View } from 'native-base';
 import React, { Component, Fragment } from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import { numberWithCommas } from '../helpers/formatter';
 import ICategory from '../types/Category';
+import IStore from '../types/Store';
 import ITransaction from '../types/Transaction';
 import IWallet from '../types/Wallet';
 
@@ -17,15 +19,9 @@ export interface DayTransactionSummaryProps {
 export class DayTransactionSummary extends Component<
   DayTransactionSummaryProps
 > {
-  protected numberWithCommas(x: number) {
-    const s = x > 0 ? `+${x}` : x.toString();
-    return s.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
-
   public render() {
-    const { day, items, getWallet, getCategory } = this.props;
+    const { day, items } = this.props;
     const dayTitle = day.toFormat('dd LLLL').toUpperCase();
-
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -34,34 +30,39 @@ export class DayTransactionSummary extends Component<
             {this.getTotal()} $
           </Text>
         </View>
-
         <View style={styles.dayContainer}>
-          {items.map((trx: ITransaction, i) => (
-            <Fragment key={trx.id}>
-              <View style={styles.trxContainer}>
-                <View style={styles.operation}>
-                  <Text style={styles.operationName}>{getCategory(trx.category_id).name}</Text>
-                  <Text style={styles.outcomeAmount}>{trx.amount} $</Text>
-                </View>
-                <View style={styles.wallet}>
-                  <Icon
-                    {...getWallet(trx.from_wallet_id).icon}
-                    style={[styles.walletIcon, { color: getWallet(trx.from_wallet_id).color }]}
-                  />
-                  <Text style={styles.walletName}>{getWallet(trx.from_wallet_id).name}</Text>
-                </View>
-              </View>
-              {i < items.length && <View style={styles.trxSplitter} />}
-            </Fragment>
-          ))}
+          {items.map(this.drawTrx)}
         </View>
       </View>
     );
   }
 
+  protected drawTrx = (trx: ITransaction, i: number, items: ITransaction[]) => {
+    const { getWallet, getCategory } = this.props;
+    const fromWallet = getWallet(trx.from_wallet_id);
+    const category = getCategory(trx.category_id);
+    return (
+        <Fragment key={trx.id}>
+          <View style={styles.trxContainer}>
+            <View style={styles.operation}>
+              <Text style={styles.operationName}>{category.name}</Text>
+              <Text style={styles.outcomeAmount}>{trx.amount} $</Text>
+            </View>
+            <View style={styles.wallet}>
+              <Icon
+                {...fromWallet.icon}
+                style={[styles.walletIcon, { color: fromWallet.color }]}
+              />
+              <Text style={styles.walletName}>{fromWallet.name}</Text>
+            </View>
+          </View>
+          {i + 1 < items.length && <View style={styles.trxSplitter} />}
+        </Fragment>);
+  }
+
   protected getTotal() {
     const { items } = this.props;
-    return this.numberWithCommas(
+    return numberWithCommas(
       items.reduce((acc: number, trx: ITransaction) => acc + trx.amount, 0)
     );
   }
@@ -161,12 +162,9 @@ const styles = StyleSheet.create({
 });
 
 export default connect(
-  (state: any) => ({
-    ...state,
-    getCategory: (id: string) =>
-      state.categories.find((category: ICategory) => category.id === id),
-    getWallet: (id: string) =>
-      state.wallets.find((wallet: IWallet) => wallet.id === id)
+  (state: IStore) => ({
+    getCategory: (id: string) => state.categories.find((category: ICategory) => category.id === id),
+    getWallet: (id: string) => state.wallets.find((wallet: IWallet) => wallet.id === id)
   }),
   () => ({})
 )(DayTransactionSummary);

@@ -1,21 +1,63 @@
+import { find } from 'lodash';
 import { Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { numberWithCommas } from '../helpers/formatter';
+import IStore from '../types/Store';
 
-export class WalletsShortSummary extends Component {
+interface WalletsShortSummaryProps {
+  totalAmount: number;
+}
+
+export class WalletsShortSummary extends Component<WalletsShortSummaryProps> {
+  public state = {
+    totalUSDAmount: 0
+  };
+
+  public componentDidMount() {
+    return this.fetchPrivat24();
+  }
+
+  public componentWillReceiveProps() {
+    return this.fetchPrivat24();
+  }
+
   public render() {
     return (
       <View style={styles.info}>
         <Text style={styles.infoTitle}>Available Balance</Text>
-        <Text style={styles.infoSum}>32,5557 UAH</Text>
+        <Text style={styles.infoSum}>
+          {numberWithCommas(this.props.totalAmount)} UAH
+        </Text>
         <View style={styles.infoTotal}>
           <View style={styles.infoTotalView}>
-            <Text style={styles.infoTotalText}>$3,555.48 USD</Text>
+            <Text style={styles.infoTotalText}>
+              ${this.state.totalUSDAmount} USD
+            </Text>
           </View>
         </View>
       </View>
     );
   }
+
+  protected fetchPrivat24 = () => {
+    const uri =
+      'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5';
+    return fetch(uri)
+      .then(response => response.json())
+      .then(response => {
+        if (response) {
+          const exchangeCourse = find(response, c => c.ccy === 'USD');
+          if (exchangeCourse) {
+            const totalUSDAmount =
+              this.props.totalAmount /
+              ((Number(exchangeCourse.buy) + Number(exchangeCourse.sale)) / 2);
+            this.setState({ totalUSDAmount: totalUSDAmount.toFixed(2) });
+          }
+        }
+      });
+  };
 }
 
 const styles = StyleSheet.create({
@@ -53,4 +95,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default WalletsShortSummary;
+export default connect(
+  (state: IStore) => ({
+    totalAmount: state.account.totalAmount
+  }),
+  () => ({})
+)(WalletsShortSummary);
