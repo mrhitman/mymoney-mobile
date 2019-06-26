@@ -26,6 +26,7 @@ export class TransactionsScreen extends Component<TransactionsScreenProps> {
             <DayTransactionSummary
               key={key}
               items={group}
+              onTouch={this.handleEdit}
               day={DateTime.fromISO(key)}
             />
           ))}
@@ -52,6 +53,10 @@ export class TransactionsScreen extends Component<TransactionsScreenProps> {
   protected handlePlusClick = () => {
     this.props.navigation.navigate('TransactionAdd');
   };
+
+  protected handleEdit = (trx: ITransaction) => {
+    this.props.navigation.navigate('TransactionEdit', { transaction: trx });
+  }
 }
 
 const styles = StyleSheet.create({

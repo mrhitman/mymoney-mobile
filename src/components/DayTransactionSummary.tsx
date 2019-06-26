@@ -12,6 +12,8 @@ import IWallet from '../types/Wallet';
 export interface DayTransactionSummaryProps {
   day: DateTime;
   items: ITransaction[];
+  
+  onTouch: (trx: ITransaction) => void;
   getCategory: (id: string) => ICategory;
   getWallet: (id: string) => IWallet;
 }
@@ -43,7 +45,7 @@ export class DayTransactionSummary extends Component<
     const category = getCategory(trx.category_id);
     return (
         <Fragment key={trx.id}>
-          <View style={styles.trxContainer}>
+          <View style={styles.trxContainer} onTouchEnd={this.handleEdit(trx)}>
             <View style={styles.operation}>
               <Text style={styles.operationName}>{category.name}</Text>
               <Text style={styles.outcomeAmount}>{trx.amount} $</Text>
@@ -58,6 +60,10 @@ export class DayTransactionSummary extends Component<
           </View>
           {i + 1 < items.length && <View style={styles.trxSplitter} />}
         </Fragment>);
+  }
+
+  protected handleEdit = (trx: ITransaction) => () => {
+    this.props.onTouch(trx);
   }
 
   protected getTotal() {
