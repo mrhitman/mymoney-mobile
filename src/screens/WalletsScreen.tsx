@@ -1,6 +1,7 @@
 import { Button, Container, Content, Icon, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import WalletShortInfo from '../components/WalletShortInfo';
@@ -39,9 +40,9 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
             </View>
             <Content style={styles.wallets}>
               {this.props.wallets.map(wallet => (
-                <View key={wallet.id} onTouchEndCapture={this.handleWalletPress}>
+                <TouchableNativeFeedback key={wallet.id} onPress={this.handleWalletPress}>
                   <WalletShortInfo wallet={wallet} />
-                </View>
+                </TouchableNativeFeedback>
               ))}
             </Content>
           </View>

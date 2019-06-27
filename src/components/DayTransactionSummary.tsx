@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon';
 import { Icon, Text, View } from 'native-base';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { numberWithCommas } from '../helpers/formatter';
 import ICategory from '../types/Category';
@@ -9,18 +10,20 @@ import IStore from '../types/Store';
 import ITransaction from '../types/Transaction';
 import IWallet from '../types/Wallet';
 
-export interface DayTransactionSummaryProps {
+interface DayTransactionSummaryProps {
   day: DateTime;
   items: ITransaction[];
-  
   onTouch: (trx: ITransaction) => void;
+}
+
+interface DayTransactionSummaryReduxProps {
   getCategory: (id: string) => ICategory;
   getWallet: (id: string) => IWallet;
 }
 
 export class DayTransactionSummary extends Component<
-  DayTransactionSummaryProps
-> {
+  DayTransactionSummaryProps & DayTransactionSummaryReduxProps
+  > {
   public render() {
     const { day, items } = this.props;
     const dayTitle = day.toFormat('dd LLLL').toUpperCase();
@@ -33,7 +36,9 @@ export class DayTransactionSummary extends Component<
           </Text>
         </View>
         <View style={styles.dayContainer}>
-          {items.map(this.drawTrx)}
+          {items
+            .filter(trx => trx.type !== 'transfer')
+            .map(this.drawTrx)}
         </View>
       </View>
     );
@@ -44,22 +49,22 @@ export class DayTransactionSummary extends Component<
     const fromWallet = getWallet(trx.from_wallet_id);
     const category = getCategory(trx.category_id);
     return (
-        <Fragment key={trx.id}>
-          <View style={styles.trxContainer} onTouchEnd={this.handleEdit(trx)}>
-            <View style={styles.operation}>
-              <Text style={styles.operationName}>{category.name}</Text>
-              <Text style={styles.outcomeAmount}>{trx.amount} $</Text>
-            </View>
-            <View style={styles.wallet}>
-              <Icon
-                {...fromWallet.icon}
-                style={[styles.walletIcon, { color: fromWallet.color }]}
-              />
-              <Text style={styles.walletName}>{fromWallet.name}</Text>
-            </View>
+      <TouchableNativeFeedback key={trx.id} onPress={this.handleEdit(trx)}>
+        <View style={styles.trxContainer}>
+          <View style={styles.operation}>
+            <Text style={styles.operationName}>{category.name}</Text>
+            <Text style={trx.type === 'income' ? styles.incomeAmount : styles.outcomeAmount}>{trx.amount} $</Text>
           </View>
-          {i + 1 < items.length && <View style={styles.trxSplitter} />}
-        </Fragment>);
+          <View style={styles.wallet}>
+            <Icon
+              {...fromWallet.icon}
+              style={[styles.walletIcon, { color: fromWallet.color }]}
+            />
+            <Text style={styles.walletName}>{fromWallet.name}</Text>
+          </View>
+        </View>
+        {i + 1 < items.length && <View style={styles.trxSplitter} />}
+      </TouchableNativeFeedback>);
   }
 
   protected handleEdit = (trx: ITransaction) => () => {
@@ -169,8 +174,8 @@ const styles = StyleSheet.create({
 
 export default connect(
   (state: IStore) => ({
-    getCategory: (id: string) => state.categories.find((category: ICategory) => category.id === id),
-    getWallet: (id: string) => state.wallets.find((wallet: IWallet) => wallet.id === id)
+    getCategory: (id: string) => state.categories.find((category: ICategory) => category.id === id)!,
+    getWallet: (id: string) => state.wallets.find((wallet: IWallet) => wallet.id === id)!
   }),
   () => ({})
 )(DayTransactionSummary);

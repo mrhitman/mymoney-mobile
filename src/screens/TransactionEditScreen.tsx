@@ -5,8 +5,9 @@ import { Picker, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import OperationIcon from '../components/OperationIcon';
+import { TRANSACTION_EDIT } from '../store/reducers/transactions';
 import ICategory from '../types/Category';
-import ITransaction from '../types/Transaction';
+import ITransaction, { ITransactionType } from '../types/Transaction';
 import IWallet from '../types/Wallet';
 
 interface TransactionEditScreenProps extends NavigationInjectedProps<{ transaction: ITransaction }> {
@@ -15,29 +16,23 @@ interface TransactionEditScreenProps extends NavigationInjectedProps<{ transacti
   transactionEdit: (values) => void;
 }
 
-enum Operations {
-  income,
-  outcome,
-  transfer
-}
-
 const OperationsSymbols = {
-  [Operations.income]: {
+  income: {
     icon: 'plus',
     color: 'rgba(0,255,0,0.65)'
   },
-  [Operations.outcome]: {
+  outcome: {
     icon: 'minus',
     color: 'rgba(255,0,0,0.65)'
   },
-  [Operations.transfer]: {
+  transfer: {
     icon: 'swap',
     color: 'rgba(0,0,255,0.65)'
   }
 };
 
 interface TransactionEditScreenState {
-  operation: Operations;
+  operation: ITransactionType;
 }
 
 export class TransactionEditScreen extends Component<
@@ -45,16 +40,15 @@ export class TransactionEditScreen extends Component<
   TransactionEditScreenState
   > {
   public state = {
-    operation: Operations.outcome
+    operation: 'outcome' as ITransactionType
   };
 
   public get initialValues() {
     const transaction = this.props.navigation.getParam("transaction");
-    global.console.log(transaction);
     return {
       ...transaction,
-      date: new Date(),
-      amount: 10100,
+      amount: Math.abs(transaction.amount).toString(),
+      date: transaction.date.toJSDate()
     };
   }
 
@@ -106,7 +100,7 @@ export class TransactionEditScreen extends Component<
                     {wallets
                       .filter(
                         wallet =>
-                          this.state.operation === Operations.transfer ||
+                          this.state.operation === 'transfer' ||
                           wallet.id !== props.values.to_wallet_id
                       )
                       .map(wallet => (
@@ -118,7 +112,7 @@ export class TransactionEditScreen extends Component<
                       ))}
                   </Picker>
                 </Item>
-                {this.state.operation === Operations.transfer && (
+                {this.state.operation === 'transfer' && (
                   <Item picker fixedLabel>
                     <Label>
                       <Text>To wallet:</Text>
@@ -145,7 +139,7 @@ export class TransactionEditScreen extends Component<
                     </Picker>
                   </Item>
                 )}
-                {this.state.operation !== Operations.transfer && (
+                {this.state.operation !== 'transfer' && (
                   <Item picker fixedLabel>
                     <Label>
                       <Text>Category:</Text>
@@ -157,16 +151,7 @@ export class TransactionEditScreen extends Component<
                       style={styles.picker}
                     >
                       {categories
-                        .filter(category => {
-                          switch (this.state.operation) {
-                            case Operations.income:
-                              return category.type === 'income';
-                            case Operations.outcome:
-                              return category.type === 'outcome';
-                            default:
-                              return false;
-                          }
-                        })
+                        .filter(category => ['income', 'outcome'].includes(category.type))
                         .map(category => (
                           <Picker.Item
                             key={category.id}
@@ -190,8 +175,8 @@ export class TransactionEditScreen extends Component<
                 </Item>
 
                 <View style={{ marginTop: 12 }}>
-                  <Button success full onPress={props.handleSubmit}>
-                    <Text>Create</Text>
+                  <Button info full onPress={props.handleSubmit}>
+                    <Text>Update</Text>
                   </Button>
                   <Button warning full onPress={props.handleReset}>
                     <Text>Cancel</Text>
@@ -209,7 +194,7 @@ export class TransactionEditScreen extends Component<
     this.props.transactionEdit({
       ...values,
       amount:
-        this.state.operation === Operations.outcome
+        this.state.operation === 'outcome'
           ? -values.amount
           : values.amount
     });
@@ -223,12 +208,12 @@ export class TransactionEditScreen extends Component<
   protected handleChangeOperation = () => {
     this.setState(state => {
       switch (state.operation) {
-        case Operations.income:
-          return { ...state, operation: Operations.outcome };
-        case Operations.outcome:
-          return { ...state, operation: Operations.transfer };
-        case Operations.transfer:
-          return { ...state, operation: Operations.income };
+        case 'income':
+          return { ...state, operation: 'transfer' };
+        case 'outcome':
+          return { ...state, operation: 'income' };
+        case 'transfer':
+          return { ...state, operation: 'outcome' };
       }
     });
   };
@@ -253,7 +238,7 @@ export default connect(
   }),
   dispatch => ({
     transactionEdit: values => {
-      dispatch({ type: 'TRANSACTION_EDIT', payload: values });
+      dispatch({ type: TRANSACTION_EDIT, payload: values });
     }
   })
 )(TransactionEditScreen);

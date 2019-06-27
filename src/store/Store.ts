@@ -1,4 +1,5 @@
 import { combineReducers, createStore } from 'redux';
+import devToolsEnhancer from 'remote-redux-devtools';
 import account from './reducers/account';
 import categories from './reducers/categories';
 import styling from './reducers/styling';
@@ -12,7 +13,8 @@ const store = createStore(
     transactions,
     categories,
     styling
-  })
+  }),
+  devToolsEnhancer()
 );
 
 export default store;

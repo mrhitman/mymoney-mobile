@@ -225,11 +225,11 @@ export class TransactionAddScreen extends Component<
     this.setState(state => {
       switch (state.operation) {
         case Operations.income:
-          return { ...state, operation: Operations.outcome };
-        case Operations.outcome:
           return { ...state, operation: Operations.transfer };
-        case Operations.transfer:
+        case Operations.outcome:
           return { ...state, operation: Operations.income };
+        case Operations.transfer:
+          return { ...state, operation: Operations.outcome };
       }
     });
   };
