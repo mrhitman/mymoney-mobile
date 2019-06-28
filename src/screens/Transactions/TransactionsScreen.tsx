@@ -9,63 +9,53 @@ import DayTransactionSummary from '../../components/DayTransactionSummary';
 import ITransaction from '../../types/Transaction';
 
 interface TransactionsScreenProps extends NavigationInjectedProps {
-  transactions: any[];
+	transactions: any[];
 }
 
 export class TransactionsScreen extends Component<TransactionsScreenProps> {
-  public render() {
-    const transactions = chain(this.props.transactions)
-      .groupBy((trx: ITransaction) => trx.date.startOf('day'))
-      .value();
+	public render() {
+		const transactions = chain(this.props.transactions).groupBy((trx: ITransaction) => trx.date.startOf('day')).value();
 
-    return (
-      <Container style={styles.content}>
-        <StatusBar barStyle="light-content" animated />
-        <Content padder>
-          {map(transactions, (group: ITransaction[], key: string) => (
-            <DayTransactionSummary
-              key={key}
-              items={group}
-              onTouch={this.handleEdit}
-              day={DateTime.fromISO(key)}
-            />
-          ))}
-        </Content>
-        <Footer style={{ backgroundColor: 'transparent' }}>
-          <Right>
-            <Button
-              icon
-              rounded
-              transparent
-              bordered
-              primary
-              style={{ marginRight: 20 }}
-              onPress={this.handlePlusClick}
-            >
-              <Icon name="add" style={{ fontSize: 20 }} />
-            </Button>
-          </Right>
-        </Footer>
-      </Container>
-    );
-  }
+		return (
+			<Container style={styles.content}>
+				<StatusBar barStyle="light-content" animated />
+				<Content padder>
+					{map(transactions, (group: ITransaction[], key: string) => (
+						<DayTransactionSummary key={key} items={group} onTouch={this.handleEdit} day={DateTime.fromISO(key)} />
+					))}
+				</Content>
+				<Footer style={{ backgroundColor: 'transparent' }}>
+					<Right>
+						<Button
+							icon
+							rounded
+							transparent
+							bordered
+							primary
+							style={{ marginRight: 20 }}
+							onPress={this.handlePlusClick}
+						>
+							<Icon name="add" style={{ fontSize: 20 }} />
+						</Button>
+					</Right>
+				</Footer>
+			</Container>
+		);
+	}
 
-  protected handlePlusClick = () => {
-    this.props.navigation.navigate('TransactionAdd');
-  };
+	protected handlePlusClick = () => {
+		this.props.navigation.navigate('TransactionAdd');
+	};
 
-  protected handleEdit = (trx: ITransaction) => {
-    this.props.navigation.navigate('TransactionEdit', { transaction: trx });
-  }
+	protected handleEdit = (trx: ITransaction) => {
+		this.props.navigation.navigate('TransactionEdit', { transaction: trx });
+	};
 }
 
 const styles = StyleSheet.create({
-  content: {
-    backgroundColor: '#FEFEFE'
-  }
+	content: {
+		backgroundColor: '#FEFEFE'
+	}
 });
 
-export default connect(
-  state => state,
-  () => ({})
-)(TransactionsScreen);
+export default connect((state) => state, () => ({}))(TransactionsScreen);

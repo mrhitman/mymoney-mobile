@@ -5,13 +5,13 @@ import store from './src/store';
 import { Root } from 'native-base';
 
 export default class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Root>
-          <AppContainer />
-        </Root>
-      </Provider>
-    );
-  }
+	render() {
+		return (
+			<Provider store={store}>
+				<Root>
+					<AppContainer />
+				</Root>
+			</Provider>
+		);
+	}
 }

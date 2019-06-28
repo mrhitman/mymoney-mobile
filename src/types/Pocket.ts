@@ -1,7 +1,7 @@
 interface IPocket {
-  id: string;
-  currency: string;
-  amount: number;
+	id: string;
+	currency: string;
+	amount: number;
 }
 
 export default IPocket;
