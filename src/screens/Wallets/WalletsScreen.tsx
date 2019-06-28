@@ -4,9 +4,9 @@ import { StyleSheet } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
-import WalletShortInfo from '../components/WalletShortInfo';
-import WalletsShortSummary from '../components/WalletsShortSummary';
-import IWallet from '../types/Wallet';
+import WalletShortInfo from '../../components/WalletShortInfo';
+import WalletsShortSummary from '../../components/WalletsShortSummary';
+import IWallet from '../../types/Wallet';
 
 interface IWalletScreenProps extends NavigationInjectedProps {
   wallets: IWallet[];

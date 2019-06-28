@@ -2,7 +2,7 @@ import { Button, Container, Content, Footer, Form, Icon, Input, Item, Label, Tex
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-import PocketsList from '../components/PocketsList';
+import PocketsList from '../../components/PocketsList';
 
 export class WalletAddScreen extends Component<NavigationInjectedProps> {
   public render() {

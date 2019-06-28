@@ -2,7 +2,7 @@ import { Container, Content, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-import WalletShortInfo from '../components/WalletShortInfo';
+import WalletShortInfo from '../../components/WalletShortInfo';
 
 
 export class WalletDetailScreen extends Component<NavigationInjectedProps> {

@@ -5,8 +5,8 @@ import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
-import DayTransactionSummary from '../components/DayTransactionSummary';
-import ITransaction from '../types/Transaction';
+import DayTransactionSummary from '../../components/DayTransactionSummary';
+import ITransaction from '../../types/Transaction';
 
 interface TransactionsScreenProps extends NavigationInjectedProps {
   transactions: any[];

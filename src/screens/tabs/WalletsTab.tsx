@@ -1,7 +1,7 @@
 import { createStackNavigator } from 'react-navigation';
-import WalletAddScreen from '../WalletAddScreen';
-import { WalletDetailScreen } from '../WalletDetailScreen';
-import WalletsScreen from '../WalletsScreen';
+import WalletAddScreen from '../Wallets/WalletAddScreen';
+import { WalletDetailScreen } from '../Wallets/WalletDetailScreen';
+import WalletsScreen from '../Wallets/WalletsScreen';
 
 export default createStackNavigator({
   WalletsList: {

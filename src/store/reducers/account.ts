@@ -1,3 +1,5 @@
+import { TRANSACTION_ADD } from "./transactions";
+
 const initialState = {
   totalAmount: 32557,
   primaryCurrency: 'UAH',
@@ -7,7 +9,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'TRANSACTION_ADD':
+    case TRANSACTION_ADD:
       return {
         ...state,
         totalAmount: state.totalAmount + action.payload.amount

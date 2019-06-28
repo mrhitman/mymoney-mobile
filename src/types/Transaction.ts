@@ -8,7 +8,7 @@ interface ITransaction {
   to_wallet_id: string;
   amount: number;
   type: ITransactionType,
-  currency: string;
+  currency_id: string;
   description: string;
 }
 
