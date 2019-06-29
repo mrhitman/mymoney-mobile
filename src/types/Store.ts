@@ -7,6 +7,7 @@ interface Store {
 	account: {
 		totalAmount: number;
 		primaryCurrency: 'UAH';
+		primaryCurrencyId: string;
 		secondaryCurrency: 'UAH';
 		language: 'UA';
 	};

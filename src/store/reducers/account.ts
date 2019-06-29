@@ -1,8 +1,10 @@
 import { TRANSACTION_ADD } from './transactions';
+import { defaultCurrencies } from './currencies';
 
 const initialState = {
 	totalAmount: 32557,
 	primaryCurrency: 'UAH',
+	primaryCurrencyId: defaultCurrencies[0].id,
 	secondaryCurrency: 'UAH',
 	language: 'UA'
 };

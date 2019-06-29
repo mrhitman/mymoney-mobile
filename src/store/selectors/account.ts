@@ -1,11 +1,26 @@
-import Store from '../../types/Store';
 import IPocket from '../../types/Pocket';
+import Store from '../../types/Store';
 import IWallet from '../../types/Wallet';
 
-export const totalAmount = (state: Store) => {
-	return state.wallets.reduce((acc: number, wallet: IWallet) => acc + totalAmountWallet(wallet), 0);
+export const totalAmount = (state: Store, toCurrency?: string) => {
+	return state.wallets.reduce((acc: number, wallet: IWallet) => acc + totalAmountWallet(state, wallet, toCurrency), 0);
 };
 
-export const totalAmountWallet = (wallet: IWallet) => {
-	return wallet.pockets.reduce((accP: number, pocket: IPocket) => pocket.amount + accP, 0);
+export const totalAmountWallet = (state: Store, wallet: IWallet, toCurrency?: string) => {
+	return wallet.pockets.reduce((acc: number, pocket: IPocket) => {
+		if (toCurrency) {
+			return acc + exchange(state, pocket.amount, toCurrency);
+		}
+		return acc + pocket.amount;
+	}, 0);
+};
+
+export const getCurrency = (state: Store, id: string) => {
+	return state.currencies.find((currency) => currency.id === id)!;
+};
+
+export const exchange = (state: Store, amount: number, toCurrency: string) => {
+	const currency1 = getCurrency(state, state.account.primaryCurrencyId);
+	const currency2 = getCurrency(state, toCurrency);
+	return amount;
 };
