@@ -43,7 +43,7 @@ export class TransactionForm extends Component<TransactionFormProps, Transaction
 	};
 
 	public render() {
-		const { formik, wallets, currencies, categories, isNew } = this.props;
+		const { formik, wallets, categories, isNew } = this.props;
 		const operation = OperationsSymbols[this.state.operation];
 		return (
 			<Fragment>

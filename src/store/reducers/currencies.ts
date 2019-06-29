@@ -8,4 +8,4 @@ const initialState = [
 ];
 
 export const defaultCurrencies = initialState;
-export default (state) => state;
+export default (state = initialState) => state;
