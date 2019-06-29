@@ -6,10 +6,12 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import WalletShortInfo from '../../components/WalletShortInfo';
 import WalletsShortSummary from '../../components/WalletsShortSummary';
+import ICurrency from '../../types/Currency';
 import IWallet from '../../types/Wallet';
 
 interface IWalletScreenProps extends NavigationInjectedProps {
 	wallets: IWallet[];
+	currencies: ICurrency[];
 }
 
 export class WalletsScreen extends Component<IWalletScreenProps> {
@@ -32,7 +34,7 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
 						<Content style={styles.wallets}>
 							{this.props.wallets.map((wallet) => (
 								<TouchableNativeFeedback key={wallet.id} onPress={this.handleWalletPress(wallet.id)}>
-									<WalletShortInfo wallet={wallet} />
+									<WalletShortInfo wallet={wallet} currencies={this.props.currencies} />
 								</TouchableNativeFeedback>
 							))}
 						</Content>

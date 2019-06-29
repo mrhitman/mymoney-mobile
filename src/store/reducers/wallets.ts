@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import { defaultCurrencies } from './currencies';
 
 const initialState = [
 	{
@@ -9,7 +10,7 @@ const initialState = [
 			name: 'cc-mastercard',
 			type: 'FontAwesome'
 		},
-		pockets: [ { id: uuid(), currency: 'UAH', amount: 5322 } ]
+		pockets: [ { id: uuid(), currency_id: defaultCurrencies[1].id, amount: 5322 } ]
 	},
 	{
 		id: uuid(),
@@ -20,9 +21,9 @@ const initialState = [
 			type: 'FontAwesome5'
 		},
 		pockets: [
-			{ id: uuid(), currency: 'UAH', amount: 3020 },
-			{ id: uuid(), currency: 'USD', amount: 18123 },
-			{ id: uuid(), currency: 'EUR', amount: 405 }
+			{ id: uuid(), currency_id: defaultCurrencies[0].id, amount: 3020 },
+			{ id: uuid(), currency_id: defaultCurrencies[1].id, amount: 18123 },
+			{ id: uuid(), currency_id: defaultCurrencies[2].id, amount: 405 }
 		]
 	}
 ];

@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { numberWithCommas } from '../helpers/formatter';
 import IStore from '../types/Store';
+import { totalAmount } from '../store/selectors/account';
 
 interface WalletsShortSummaryProps {
 	totalAmount: number;
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
 
 export default connect(
 	(state: IStore) => ({
-		totalAmount: state.account.totalAmount
+		totalAmount: totalAmount(state)
 	}),
 	() => ({})
 )(WalletsShortSummary);
