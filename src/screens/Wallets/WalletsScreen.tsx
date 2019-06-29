@@ -31,7 +31,7 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
 						</View>
 						<Content style={styles.wallets}>
 							{this.props.wallets.map((wallet) => (
-								<TouchableNativeFeedback key={wallet.id} onPress={this.handleWalletPress}>
+								<TouchableNativeFeedback key={wallet.id} onPress={this.handleWalletPress(wallet.id)}>
 									<WalletShortInfo wallet={wallet} />
 								</TouchableNativeFeedback>
 							))}
@@ -46,8 +46,8 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
 		this.props.navigation.navigate('WalletAdd');
 	};
 
-	private handleWalletPress = () => {
-		this.props.navigation.navigate('WalletTransactions');
+	private handleWalletPress = (id: string) => () => {
+		this.props.navigation.navigate('WalletTransactions', { id });
 	};
 }
 

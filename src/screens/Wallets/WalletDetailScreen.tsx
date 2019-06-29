@@ -2,15 +2,25 @@ import { Container, Content, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
+import { connect } from 'react-redux';
+import IWallet from '../../types/Wallet';
 
-export class WalletDetailScreen extends Component<NavigationInjectedProps> {
-	render() {
+interface WalletDetailScreenProps
+	extends NavigationInjectedProps<{
+			id: string;
+		}> {
+	wallets: IWallet[];
+}
+
+export class WalletDetailScreen extends Component<WalletDetailScreenProps> {
+	public render() {
+		const wallet = this.getWallet();
 		return (
 			<Container style={styles.content}>
 				<StatusBar barStyle="light-content" animated />
 				<Content padder>
 					<View style={styles.header}>
-						<Text style={styles.headerTitle}>wallet.name</Text>
+						<Text style={styles.headerTitle}>{wallet.name}</Text>
 					</View>
 					<View style={styles.info}>
 						<Text style={styles.infoTitle}>Available Balance</Text>
@@ -35,6 +45,10 @@ export class WalletDetailScreen extends Component<NavigationInjectedProps> {
 			</Container>
 		);
 	}
+
+	protected getWallet = () => {
+		return this.props.wallets.find((wallet) => wallet.id === this.props.navigation.getParam('id'))!;
+	};
 }
 
 const styles = StyleSheet.create({
@@ -122,4 +136,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default WalletDetailScreen;
+export default connect((state) => state, () => ({}))(WalletDetailScreen);

@@ -138,7 +138,6 @@ export class TransactionForm extends Component<TransactionFormProps, Transaction
 					<Label>Regular operation:</Label>
 					<CheckBox style={{ margin: 12, marginRight: 20 }} />
 				</Item>
-
 				<View style={{ marginTop: 12 }}>
 					<Button info full onPress={formik.handleSubmit}>
 						<Text>{isNew ? 'Create' : 'Update'}</Text>

@@ -17,7 +17,7 @@ export class WalletShortInfo extends Component<{ wallet: IWallet }> {
             {wallet.pockets.map(pocket => (
               <View key={pocket.id} style={styles.details}>
                 <Text style={styles.pocketInfo}>
-                  {pocket.amount} {pocket.currency}
+                  {pocket.amount} {pocket.currency_id}
                 </Text>
               </View>
             ))}
