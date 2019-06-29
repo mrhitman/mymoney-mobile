@@ -80,35 +80,52 @@ export interface TransactionEditAction {
 
 export interface TransactionDeleteAction {
 	type: typeof TRANSACTION_DELETE;
-	payload: number;
+	payload: string;
 }
 
 export type TransactionTypes = TransactionAddAction | TransactionEditAction | TransactionDeleteAction;
 
+function create(state: ITransaction[], action: TransactionAddAction) {
+	const trx = action.payload;
+	return [
+		...state,
+		{
+			...trx,
+			id: uuid(),
+			currency: '$',
+			amount: trx.type === 'outcome' ? -Number(trx.amount) : Number(trx.amount),
+			date: DateTime.fromJSDate(action.payload.date)
+		}
+	];
+}
+
+function update(state: ITransaction[], action: TransactionEditAction) {
+	const trx = action.payload;
+	const oldTrxIndex = findIndex(state, (trx: ITransaction) => trx.id === trx.id);
+	const oldTrx = state[oldTrxIndex];
+	const newState = [ ...state ];
+	newState.splice(oldTrxIndex, 1, {
+		...oldTrx,
+		...trx,
+		id: oldTrx.id,
+		amount: trx.type === 'outcome' ? -Number(trx.amount) : Number(trx.amount),
+		date: DateTime.fromJSDate(trx.date)
+	});
+	return newState;
+}
+
+function destroy(state: ITransaction[], action: TransactionDeleteAction) {
+	return state.filter((trx: ITransaction) => trx.id !== action.payload);
+}
+
 export default (state: ITransaction[] = initialState, action) => {
 	switch (action.type) {
 		case TRANSACTION_ADD:
-			return [
-				...state,
-				{
-					...action.payload,
-					id: uuid(),
-					currency: '$',
-					date: DateTime.fromJSDate(action.payload.date)
-				}
-			];
+			return create(state, action);
 		case TRANSACTION_EDIT:
-			const transaction = action.payload;
-			const oldTrxIndex = findIndex(state, (trx: ITransaction) => trx.id === transaction.id);
-			const newState = [ ...state ];
-			newState.splice(oldTrxIndex, 1, {
-				...transaction,
-				amount: Number(transaction.amount),
-				date: DateTime.fromJSDate(transaction.date)
-			});
-			return newState;
+			return update(state, action);
 		case TRANSACTION_DELETE:
-			return state.filter((trx: ITransaction) => trx.id !== action.payload);
+			return destroy(state, action);
 		default:
 			return state;
 	}

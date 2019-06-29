@@ -9,6 +9,7 @@ import ICategory from '../types/Category';
 import IStore from '../types/Store';
 import ITransaction from '../types/Transaction';
 import IWallet from '../types/Wallet';
+import ICurrency from '../types/Currency';
 
 interface DayTransactionSummaryProps {
 	day: DateTime;
@@ -18,6 +19,7 @@ interface DayTransactionSummaryProps {
 
 interface DayTransactionSummaryReduxProps {
 	getCategory: (id: string) => ICategory;
+	getCurrency: (id: string) => ICurrency;
 	getWallet: (id: string) => IWallet;
 }
 
@@ -40,15 +42,16 @@ export class DayTransactionSummary extends Component<DayTransactionSummaryProps 
 	}
 
 	protected drawTrx = (trx: ITransaction, i: number, items: ITransaction[]) => {
-		const { getWallet, getCategory } = this.props;
+		const { getWallet, getCategory, getCurrency } = this.props;
 		const fromWallet = getWallet(trx.from_wallet_id);
 		const category = getCategory(trx.category_id);
+		const currency = getCurrency(trx.currency_id);
 		return (
 			<TouchableNativeFeedback key={trx.id} onPress={this.handleEdit(trx)}>
 				<View style={styles.trxContainer}>
 					<View style={styles.operation}>
 						<Text style={styles.operationName}>{category.name}</Text>
-						<Text style={trx.type === 'income' ? styles.incomeAmount : styles.outcomeAmount}>{trx.amount} $</Text>
+						<Text style={trx.type === 'income' ? styles.incomeAmount : styles.outcomeAmount}>{trx.amount} {currency.symbol}</Text>
 					</View>
 					<View style={styles.wallet}>
 						<Icon {...fromWallet.icon} style={[ styles.walletIcon, { color: fromWallet.color } ]} />
@@ -166,7 +169,8 @@ const styles = StyleSheet.create({
 export default connect(
 	(state: IStore) => ({
 		getCategory: (id: string) => state.categories.find((category: ICategory) => category.id === id)!,
-		getWallet: (id: string) => state.wallets.find((wallet: IWallet) => wallet.id === id)!
+		getWallet: (id: string) => state.wallets.find((wallet: IWallet) => wallet.id === id)!,
+		getCurrency: (id: string) => state.currencies.find((currency: ICurrency) => currency.id === id)!
 	}),
 	() => ({})
 )(DayTransactionSummary);

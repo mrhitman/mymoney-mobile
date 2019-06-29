@@ -9,7 +9,7 @@ import DayTransactionSummary from '../../components/DayTransactionSummary';
 import ITransaction from '../../types/Transaction';
 
 interface TransactionsScreenProps extends NavigationInjectedProps {
-	transactions: any[];
+	transactions: ITransaction[];
 }
 
 export class TransactionsScreen extends Component<TransactionsScreenProps> {

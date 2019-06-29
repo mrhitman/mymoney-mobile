@@ -26,5 +26,6 @@ const initialState = [
 		]
 	}
 ];
+
 export const defaultWallets = initialState;
 export default (state = initialState) => state;

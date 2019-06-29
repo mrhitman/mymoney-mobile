@@ -43,24 +43,34 @@ export class TransactionForm extends Component<TransactionFormProps, Transaction
 	};
 
 	public render() {
-		const { formik, wallets, categories, isNew } = this.props;
+		const { formik, wallets, categories, currencies, isNew } = this.props;
 		const operation = OperationsSymbols[this.state.operation];
 		return (
 			<Fragment>
-				<Item inlineLabel>
-					<View onTouchEndCapture={this.handleChangeOperation}>
-						<Label style={{ marginRight: 25 }}>
-							<OperationIcon operation={operation} />
-						</Label>
-					</View>
-					<Input
-						keyboardType="decimal-pad"
-						placeholder="0"
-						value={formik.values.amount}
-						onChangeText={formik.handleChange('amount')}
-						style={styles.amountPicker}
-					/>
-				</Item>
+				<View style={styles.amountContainer}>
+					<Item inlineLabel style={{ flexGrow: 5, marginRight: 0 }}>
+						<View onTouchEndCapture={this.handleChangeOperation}>
+							<Label style={{ marginRight: 25 }}>
+								<OperationIcon operation={operation} />
+							</Label>
+						</View>
+						<Input
+							keyboardType="decimal-pad"
+							placeholder="0"
+							value={formik.values.amount}
+							onChangeText={formik.handleChange('amount')}
+							style={styles.amountPicker}
+						/>
+					</Item>
+					<Picker
+						mode="dropdown"
+						onValueChange={formik.handleChange('currency_id')}
+						selectedValue={formik.values.currency_id}
+						style={{ flexGrow: 3, marginTop: 70 }}
+					>
+						{currencies.map((currecy) => <Picker.Item key={currecy.id} label={currecy.short} value={currecy.id} />)}
+					</Picker>
+				</View>
 				<Item fixedLabel>
 					<Label>Date & time</Label>
 					<DatePicker
@@ -115,7 +125,7 @@ export class TransactionForm extends Component<TransactionFormProps, Transaction
 							style={styles.picker}
 						>
 							{categories
-								.filter((category) => [ 'income', 'outcome' ].includes(category.type))
+								.filter((category) => category.type === this.state.operation)
 								.map((category) => <Picker.Item key={category.id} label={category.name} value={category.id} />)}
 						</Picker>
 					</Item>
@@ -156,6 +166,14 @@ export class TransactionForm extends Component<TransactionFormProps, Transaction
 }
 
 const styles = StyleSheet.create({
+	amountContainer: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-between'
+	},
+	currencyPicker: {
+		width: 30
+	},
 	amountPicker: {
 		fontSize: 65,
 		fontWeight: 'bold',

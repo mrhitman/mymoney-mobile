@@ -5,6 +5,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import { TRANSACTION_EDIT } from '../../store/reducers/transactions';
 import ICategory from '../../types/Category';
+import ICurrency from '../../types/Currency';
 import ITransaction from '../../types/Transaction';
 import IWallet from '../../types/Wallet';
 import TransactionForm from './TransactionForm';
@@ -12,6 +13,7 @@ import TransactionForm from './TransactionForm';
 interface TransactionEditScreenProps extends NavigationInjectedProps<{ transaction: ITransaction }> {
 	wallets: IWallet[];
 	categories: ICategory[];
+	currencies: ICurrency[];
 	transactionEdit: (values) => void;
 }
 
@@ -26,7 +28,7 @@ export class TransactionEditScreen extends Component<TransactionEditScreenProps>
 	}
 
 	public render() {
-		const { categories, wallets } = this.props;
+		const { categories, wallets, currencies } = this.props;
 		return (
 			<Container>
 				<Content padder style={{ margin: 10 }}>
@@ -38,7 +40,7 @@ export class TransactionEditScreen extends Component<TransactionEditScreenProps>
 							<TransactionForm
 								wallets={wallets}
 								categories={categories}
-								currencies={[]}
+								currencies={currencies}
 								handleReset={this.handleReset}
 								handleChangeOperation={this.handleSubmit}
 								formik={props}

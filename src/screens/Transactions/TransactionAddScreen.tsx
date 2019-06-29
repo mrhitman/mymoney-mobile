@@ -40,7 +40,7 @@ export class TransactionAddScreen extends Component<TransactionAddScreenProps, T
 	}
 
 	public render() {
-		const { categories, wallets } = this.props;
+		const { categories, wallets, currencies } = this.props;
 		return (
 			<Container>
 				<Content padder style={{ margin: 10 }}>
@@ -50,9 +50,10 @@ export class TransactionAddScreen extends Component<TransactionAddScreenProps, T
 						onReset={this.handleReset}
 						render={(props) => (
 							<TransactionForm
+								isNew
 								wallets={wallets}
 								categories={categories}
-								currencies={[]}
+								currencies={currencies}
 								handleReset={this.handleReset}
 								handleChangeOperation={this.handleSubmit}
 								formik={props}
