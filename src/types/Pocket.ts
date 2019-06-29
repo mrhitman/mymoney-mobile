@@ -1,6 +1,7 @@
+
 interface IPocket {
 	id: string;
-	currency: string;
+	currency_id: string;
 	amount: number;
 }
 

@@ -2,45 +2,39 @@ import { Button, Container, Content, Footer, Form, Icon, Input, Item, Label, Tex
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-import PocketsList from '../../components/PocketsList';
+import WalletForm from './WalletForm';
+import { Formik } from 'formik';
+import { defaultCurrencies } from '../../store/reducers/currencies';
 
 export class WalletAddScreen extends Component<NavigationInjectedProps> {
+	public get initialValues() {
+		return {
+			name: '',
+			color: 'rgba(255,0,0,0.5)',
+			icon: {
+				name: 'cc-mastercard',
+				type: 'FontAwesome'
+			},
+			pockets: [
+				{
+					id: '11',
+					currency_id: defaultCurrencies[0].id,
+					amount: 0
+				}
+			]
+		};
+	}
+
 	public render() {
 		return (
 			<Container>
 				<Content style={styles.content}>
-					<Form>
-						<Item inlineLabel>
-							<Label>Name: </Label>
-							<Input />
-						</Item>
-						<Item inlineLabel>
-							<Label>Color: </Label>
-							<Input />
-						</Item>
-						<Item inlineLabel>
-							<Label>Icon: </Label>
-							<Input />
-						</Item>
-						<View>
-							<View style={styles.header}>
-								<Text style={styles.headerTitle}>Pockets</Text>
-								<Button
-									icon
-									rounded
-									transparent
-									bordered
-									primary
-									style={styles.addButton}
-									onPress={() => this.props.navigation.navigate('WalletAdd')}
-								>
-									<Icon name="add" style={styles.addIcon} />
-								</Button>
-							</View>
-							{/* <PocketForm /> */}
-							<PocketsList />
-						</View>
-					</Form>
+					<Formik
+						initialValues={this.initialValues}
+						onSubmit={this.handleSubmit}
+						onReset={this.handleSubmit}
+						render={(props) => <WalletForm formik={props} currencies={defaultCurrencies} />}
+					/>
 				</Content>
 				<Footer style={styles.footer}>
 					<View>
@@ -57,6 +51,15 @@ export class WalletAddScreen extends Component<NavigationInjectedProps> {
 			</Container>
 		);
 	}
+
+	protected handleSubmit = (values) => {
+		// @TODO write to store
+		this.props.navigation.goBack();
+	};
+
+	protected handleReset = () => {
+		this.props.navigation.goBack();
+	};
 }
 
 const styles = StyleSheet.create({
