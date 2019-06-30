@@ -1,14 +1,14 @@
+import { groupBy } from 'lodash';
 import { DateTime } from 'luxon';
 import Store from '../../types/Store';
-import { groupBy } from 'lodash';
 import ITransaction, { ITransactionType } from '../../types/Transaction';
 
-export const getAmountForPeriod = (state: Store, to: DateTime, from?: DateTime) => {
-	return getForPeriod(state, to, from).reduce((acc, trx) => trx.amount + acc, 0);
+export const getAmountForPeriod = (transactions: ITransaction[], to: DateTime, from?: DateTime) => {
+	return getForPeriod(transactions, to, from).reduce((acc, trx) => trx.amount + acc, 0);
 };
 
-export const getForPeriod = (state: Store, to: DateTime, from?: DateTime) => {
-	return state.transactions.filter((trx: ITransaction) => {
+export const getForPeriod = (transactions: ITransaction[], to: DateTime, from?: DateTime) => {
+	return transactions.filter((trx: ITransaction) => {
 		return trx.date > to && (from || DateTime.local()) < to;
 	});
 };

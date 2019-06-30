@@ -1,24 +1,32 @@
-import { Container, Content } from 'native-base';
+import { map, random } from 'lodash';
+import { Container, Content, View, Header, Text } from 'native-base';
 import React, { Component } from 'react';
 import { Dimensions, StatusBar, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import { connect } from 'react-redux';
 import { groupByCategory } from '../store/selectors/transactions';
-import Store from '../types/Store';
-import ITransaction from '../types/Transaction';
-import { map, random } from 'lodash';
 import ICategory from '../types/Category';
+import Store from '../types/Store';
+import ITransaction, { ITransactionType } from '../types/Transaction';
 
 const screenWidth = Dimensions.get('window').width;
 
 interface ChartsScreenProps {
-	groupByCategory: () => { [key: string]: ITransaction[] };
+	groupByCategory: (type: ITransactionType) => { [key: string]: ITransaction[] };
 	categories: ICategory[];
 }
 
-export class ChartsScreen extends Component<ChartsScreenProps> {
+interface ChartsScreenState {
+	type: ITransactionType;
+}
+
+export class ChartsScreen extends Component<ChartsScreenProps, ChartsScreenState> {
+	public state = {
+		type: 'outcome' as ITransactionType
+	};
+
 	public render() {
-		const data = map(this.props.groupByCategory(), (group: ITransaction[], key: string) => {
+		const data = map(this.props.groupByCategory(this.state.type), (group: ITransaction[], key: string) => {
 			return {
 				name: this.props.categories.find((c) => c.id === key)!.name,
 				color: `rgba(${random(255)},${random(255)},${random(255)},0.7)`,
@@ -33,18 +41,26 @@ export class ChartsScreen extends Component<ChartsScreenProps> {
 		};
 		return (
 			<Container style={styles.content}>
+				<Header>
+					<Text>Charts</Text>
+				</Header>
 				<StatusBar barStyle="light-content" animated />
 				<Content padder>
-					<PieChart
-						data={data}
-						width={screenWidth}
-						height={220}
-						chartConfig={chartConfig}
-						accessor="amount"
-						backgroundColor="transparent"
-						paddingLeft="15"
-						absolute
-					/>
+					<View
+						onTouchEndCapture={() =>
+							this.setState((state) => ({ type: state.type === 'income' ? 'outcome' : 'income' }))}
+					>
+						<PieChart
+							data={data}
+							width={screenWidth}
+							height={220}
+							chartConfig={chartConfig}
+							accessor="amount"
+							backgroundColor="transparent"
+							paddingLeft="15"
+							absolute
+						/>
+					</View>
 				</Content>
 			</Container>
 		);
@@ -58,6 +74,6 @@ const styles = StyleSheet.create({
 });
 
 export default connect(
-	(state: Store) => ({ ...state, groupByCategory: () => groupByCategory(state, 'outcome') }),
+	(state: Store) => ({ ...state, groupByCategory: (type: ITransactionType) => groupByCategory(state, type) }),
 	() => ({})
 )(ChartsScreen);

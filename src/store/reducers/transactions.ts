@@ -14,7 +14,18 @@ const initialState = [
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
 		type: <ITransactionType>'outcome',
-		amount: -368,
+		amount: -168,
+		currency_id: defaultCurrencies[0].id,
+		description: ''
+	},
+	{
+		id: uuid(),
+		category_id: find(defaultCategories, (category) => category.name === 'Deposit')!.id,
+		date: DateTime.local(),
+		from_wallet_id: defaultWallets[0].id,
+		to_wallet_id: '0',
+		type: <ITransactionType>'income',
+		amount: 404,
 		currency_id: defaultCurrencies[0].id,
 		description: ''
 	},
@@ -36,7 +47,7 @@ const initialState = [
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
 		type: <ITransactionType>'outcome',
-		amount: -389,
+		amount: -407,
 		currency_id: defaultCurrencies[0].id,
 		description: ''
 	},
@@ -47,7 +58,7 @@ const initialState = [
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
 		type: <ITransactionType>'outcome',
-		amount: -389,
+		amount: -312,
 		currency_id: defaultCurrencies[0].id,
 		description: ''
 	},
