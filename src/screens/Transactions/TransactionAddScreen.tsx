@@ -17,15 +17,7 @@ interface TransactionAddScreenProps extends NavigationInjectedProps {
 	transactionAdd: (values) => void;
 }
 
-interface TransactionAddScreenState {
-	operation: ITransactionType;
-}
-
-export class TransactionAddScreen extends Component<TransactionAddScreenProps, TransactionAddScreenState> {
-	public state = {
-		operation: 'outcome' as ITransactionType
-	};
-
+export class TransactionAddScreen extends Component<TransactionAddScreenProps> {
 	public get initialValues() {
 		const { categories, wallets, currencies } = this.props;
 		return {
@@ -35,6 +27,7 @@ export class TransactionAddScreen extends Component<TransactionAddScreenProps, T
 			category_id: categories[0].id,
 			currency_id: currencies[0].id,
 			description: '',
+			type: 'outcome',
 			date: new Date()
 		};
 	}
@@ -55,7 +48,6 @@ export class TransactionAddScreen extends Component<TransactionAddScreenProps, T
 								categories={categories}
 								currencies={currencies}
 								handleReset={this.handleReset}
-								handleChangeOperation={this.handleSubmit}
 								formik={props}
 							/>
 						)}
@@ -79,7 +71,7 @@ export default connect(
 	(state) => state,
 	(dispatch) => ({
 		transactionAdd: (values) => {
-			dispatch({ type: TRANSACTION_ADD, payload: values });
+			dispatch({ type: TRANSACTION_ADD, payload: { ...values } });
 		}
 	})
 )(TransactionAddScreen);

@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps, Formik } from 'formik';
 import { Button, CheckBox, DatePicker, Input, Item, Label, Text, View } from 'native-base';
 import React, { Component, Fragment } from 'react';
 import { Picker, StyleSheet } from 'react-native';
@@ -29,7 +29,6 @@ interface TransactionFormProps {
 	currencies: ICurrency[];
 	categories: ICategory[];
 	handleReset: () => void;
-	handleChangeOperation: (operation: ITransactionType) => void;
 	isNew?: boolean;
 }
 
@@ -39,7 +38,7 @@ interface TransactionFormState {
 
 export class TransactionForm extends Component<TransactionFormProps, TransactionFormState> {
 	public state = {
-		operation: 'outcome' as ITransactionType
+		operation: this.props.formik.initialValues.type
 	};
 
 	public render() {
@@ -152,12 +151,16 @@ export class TransactionForm extends Component<TransactionFormProps, Transaction
 
 	protected handleChangeOperation = () => {
 		this.setState((state) => {
+			const { formik } = this.props;
 			switch (state.operation) {
 				case 'income':
+					formik.setFieldValue('type', 'transfer');
 					return { ...state, operation: 'transfer' };
 				case 'outcome':
+					formik.setFieldValue('type', 'income');
 					return { ...state, operation: 'income' };
 				case 'transfer':
+					formik.setFieldValue('type', 'outcome');
 					return { ...state, operation: 'outcome' };
 			}
 		});

@@ -42,7 +42,6 @@ export class TransactionEditScreen extends Component<TransactionEditScreenProps>
 								categories={categories}
 								currencies={currencies}
 								handleReset={this.handleReset}
-								handleChangeOperation={this.handleSubmit}
 								formik={props}
 							/>
 						)}
@@ -53,7 +52,6 @@ export class TransactionEditScreen extends Component<TransactionEditScreenProps>
 	}
 
 	protected handleSubmit = (values) => {
-		this.props.transactionEdit(values);
 		this.props.navigation.goBack();
 	};
 
