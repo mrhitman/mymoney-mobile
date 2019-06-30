@@ -13,7 +13,7 @@ interface CategoriesScreenProps {
 
 export class CategoriesScreen extends Component<CategoriesScreenProps> {
 	public state = {
-		selected: 'ALL'
+		selected: 'all'
 	};
 
 	public render() {
@@ -33,9 +33,9 @@ export class CategoriesScreen extends Component<CategoriesScreenProps> {
 							selectedValue={this.state.selected}
 							onValueChange={this.handleChangeFilter}
 						>
-							<Picker.Item label="ALL" value="ALL" />
-							<Picker.Item label="INCOME" value="INCOME" />
-							<Picker.Item label="OUTCOME" value="OUTCOME" />
+							<Picker.Item label="ALL" value="all" />
+							<Picker.Item label="INCOME" value="income" />
+							<Picker.Item label="OUTCOME" value="outcome" />
 						</Picker>
 					</View>
 					<View>
@@ -94,7 +94,7 @@ export default connect(
 	(state: Store) => ({
 		...state,
 		getCategoriesByType: (type: string) =>
-			type === 'ALL' ? state.categories : getCategoriesByType(state, type.toLowerCase())
+			type === 'all' ? state.categories : getCategoriesByType(state, type)
 	}),
 	() => ({})
 )(CategoriesScreen);
