@@ -31,7 +31,7 @@ const initialState = [
 	},
 	{
 		id: uuid(),
-		category_id: find(defaultCategories, (category) => category.name === 'Coffee')!.id,
+		category_id: find(defaultCategories, (category) => category.name === 'Sport')!.id,
 		date: DateTime.local().minus({ day: 1 }),
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
@@ -42,7 +42,7 @@ const initialState = [
 	},
 	{
 		id: uuid(),
-		category_id: find(defaultCategories, (category) => category.name === 'Coffee')!.id,
+		category_id: find(defaultCategories, (category) => category.name === 'Food')!.id,
 		date: DateTime.local().minus({ day: 1 }),
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
@@ -70,12 +70,12 @@ export const TRANSACTION_DELETE = 'TRANSACTION_DELETE';
 
 export interface TransactionAddAction {
 	type: typeof TRANSACTION_ADD;
-	payload: ITransaction;
+	payload: any;
 }
 
 export interface TransactionEditAction {
 	type: typeof TRANSACTION_EDIT;
-	payload: ITransaction;
+	payload: any;
 }
 
 export interface TransactionDeleteAction {

@@ -1,10 +1,11 @@
-import { Button, Container, Content, Footer, Form, Icon, Input, Item, Label, Text, View } from 'native-base';
+import { Formik } from 'formik';
+import { Button, Container, Content, Footer, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
-import WalletForm from './WalletForm';
-import { Formik } from 'formik';
+import uuid from 'uuid';
 import { defaultCurrencies } from '../../store/reducers/currencies';
+import WalletForm from './WalletForm';
 
 export class WalletAddScreen extends Component<NavigationInjectedProps> {
 	public get initialValues() {
@@ -17,8 +18,13 @@ export class WalletAddScreen extends Component<NavigationInjectedProps> {
 			},
 			pockets: [
 				{
-					id: '11',
+					id: uuid(),
 					currency_id: defaultCurrencies[0].id,
+					amount: 0
+				},
+				{
+					id: uuid(),
+					currency_id: defaultCurrencies[1].id,
 					amount: 0
 				}
 			]
@@ -28,7 +34,7 @@ export class WalletAddScreen extends Component<NavigationInjectedProps> {
 	public render() {
 		return (
 			<Container>
-				<Content style={styles.content}>
+				<Content padder style={styles.content}>
 					<Formik
 						initialValues={this.initialValues}
 						onSubmit={this.handleSubmit}

@@ -34,36 +34,7 @@ export class WalletForm extends Component<WalletFormProps> {
 }
 
 const styles = StyleSheet.create({
-	content: {
-		paddingTop: 30
-	},
-	header: {
-		flex: 1,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-around',
-		paddingTop: 30
-	},
-	headerTitle: {
-		fontFamily: 'Questrial-Regular',
-		flex: 2,
-		fontSize: 25,
-		fontWeight: 'bold',
-		marginLeft: 15,
-		marginTop: 20
-	},
-	addButton: {
-		marginTop: 10,
-		marginRight: 10
-	},
-	addIcon: {
-		fontSize: 20
-	},
-	footer: {
-		flexDirection: 'row',
-		height: 46,
-		backgroundColor: '#fff',
-		justifyContent: 'center'
-	}
+
 });
+
 export default WalletForm;
