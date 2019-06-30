@@ -1,6 +1,7 @@
 import IPocket from '../../types/Pocket';
 import Store from '../../types/Store';
 import IWallet from '../../types/Wallet';
+import { exchange } from './currencies';
 
 export const totalAmount = (state: Store, toCurrency?: string) => {
 	return state.wallets.reduce((acc: number, wallet: IWallet) => acc + totalAmountWallet(state, wallet, toCurrency), 0);
@@ -13,14 +14,4 @@ export const totalAmountWallet = (state: Store, wallet: IWallet, toCurrency?: st
 		}
 		return acc + pocket.amount;
 	}, 0);
-};
-
-export const getCurrency = (state: Store, id: string) => {
-	return state.currencies.find((currency) => currency.id === id)!;
-};
-
-export const exchange = (state: Store, amount: number, toCurrency: string) => {
-	const currency1 = getCurrency(state, state.account.primaryCurrencyId);
-	const currency2 = getCurrency(state, toCurrency);
-	return amount;
 };

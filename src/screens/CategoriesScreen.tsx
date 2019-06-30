@@ -2,8 +2,16 @@ import { Container, Content, Icon, List, ListItem, Picker, Text, View } from 'na
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import { getCategoriesByType } from '../store/selectors/categories';
+import ICategory from '../types/Category';
+import Store from '../types/Store';
 
-export class CategoriesScreen extends Component<{ categories: any[] }> {
+interface CategoriesScreenProps {
+	categories: ICategory[];
+	getCategoriesByType: (type: string) => ICategory[];
+}
+
+export class CategoriesScreen extends Component<CategoriesScreenProps> {
 	public state = {
 		selected: 'ALL'
 	};
@@ -31,23 +39,20 @@ export class CategoriesScreen extends Component<{ categories: any[] }> {
 						</Picker>
 					</View>
 					<View>
-						<List>
-							{this.props.categories
-								.filter(
-									(category) =>
-										this.state.selected === 'ALL' || this.state.selected.toLowerCase() === category.type.toLowerCase()
-								)
-								.map((category) => (
-									<ListItem key={category.id}>
-										<Text>{category.name}</Text>
-									</ListItem>
-								))}
-						</List>
+						<List>{this.props.getCategoriesByType(this.state.selected).map(this.renderCategory)}</List>
 					</View>
 				</Content>
 			</Container>
 		);
 	}
+
+	protected renderCategory = (category: ICategory) => {
+		return (
+			<ListItem key={category.id}>
+				<Text>{category.name}</Text>
+			</ListItem>
+		);
+	};
 
 	protected handleChangeFilter = (value: string) => {
 		this.setState({
@@ -85,4 +90,11 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect((state: any) => ({ categories: state.categories } as any), () => ({}))(CategoriesScreen);
+export default connect(
+	(state: Store) => ({
+		...state,
+		getCategoriesByType: (type: string) =>
+			type === 'ALL' ? state.categories : getCategoriesByType(state, type.toLowerCase())
+	}),
+	() => ({})
+)(CategoriesScreen);
