@@ -1,5 +1,5 @@
 import { map, random } from 'lodash';
-import { Container, Content, View, Header, Text } from 'native-base';
+import { Container, Content, Header, Left, Title, View, Segment, Button, Text } from 'native-base';
 import React, { Component } from 'react';
 import { Dimensions, StatusBar, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
@@ -41,10 +41,22 @@ export class ChartsScreen extends Component<ChartsScreenProps, ChartsScreenState
 		};
 		return (
 			<Container style={styles.content}>
-				<Header>
-					<Text>Charts</Text>
+				<Header hasSegment>
+					<Left>
+						<Title>Charts</Title>
+					</Left>
 				</Header>
-				<StatusBar barStyle="light-content" animated />
+				<Segment>
+					<Button first active={this.state.type === 'income'}>
+						<Text>Income</Text>
+					</Button>
+					<Button active={this.state.type === 'outcome'}>
+						<Text>Outcome</Text>
+					</Button>
+					<Button last>
+						<Text>Transfers</Text>
+					</Button>
+				</Segment>
 				<Content padder>
 					<View
 						onTouchEndCapture={() =>

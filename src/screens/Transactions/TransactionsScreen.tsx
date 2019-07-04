@@ -17,7 +17,7 @@ export class TransactionsScreen extends Component<TransactionsScreenProps> {
 		const transactions = chain(this.props.transactions)
 			.groupBy((trx: ITransaction) => trx.date.startOf('day').valueOf())
 			.value();
-		
+
 		// global.console.log(transactions);
 		return (
 			<Container style={styles.content}>
@@ -27,21 +27,15 @@ export class TransactionsScreen extends Component<TransactionsScreenProps> {
 						<DayTransactionSummary key={key} items={group} onTouch={this.handleEdit} day={DateTime.fromMillis(+key)} />
 					))}
 				</Content>
-				<Footer style={{ backgroundColor: 'transparent' }}>
-					<Right>
-						<Button
-							icon
-							rounded
-							transparent
-							bordered
-							primary
-							style={{ marginRight: 20 }}
-							onPress={this.handlePlusClick}
-						>
-							<Icon name="add" style={{ fontSize: 20 }} />
-						</Button>
-					</Right>
-				</Footer>
+				<Button
+					icon
+					rounded
+					primary
+					style={{ bottom: 16, right: 26, position: 'absolute' }}
+					onPress={this.handlePlusClick}
+				>
+					<Icon name="add" style={{ fontSize: 20 }} />
+				</Button>
 			</Container>
 		);
 	}

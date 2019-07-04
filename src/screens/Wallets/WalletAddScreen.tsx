@@ -98,7 +98,7 @@ export default connect(
   state => state,
   (dispatch) => ({
 		createWallet: (values) => {
-			dispatch({ type: 'WALLET_CREATE', payload: values });
+			dispatch({ type: 'WALLET_ADD', payload: values });
 		}
 	})
 )(WalletAddScreen);

@@ -1,5 +1,5 @@
 import { Button, Container, Content, Icon, Text, View } from 'native-base';
-import React, { Component } from 'react';
+import React, { Component, SyntheticEvent } from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -18,12 +18,9 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
 	public render() {
 		return (
 			<Container style={styles.content}>
-				<Content scrollEnabled={false}>
+				<Content>
 					<View style={styles.header}>
 						<Text style={styles.headerTitle}>Your Wallets</Text>
-						<Button icon rounded transparent bordered primary style={styles.addButton} onPress={this.handleWalletAdd}>
-							<Icon name="add" style={styles.addIcon} />
-						</Button>
 					</View>
 					<WalletsShortSummary />
 					<View style={styles.account}>
@@ -40,11 +37,20 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
 						</Content>
 					</View>
 				</Content>
+				<Button
+					icon
+					rounded
+					primary
+					style={{ bottom: 16, right: 26, position: 'absolute' }}
+					onPress={this.handlePlusClick}
+				>
+					<Icon name="add" style={{ fontSize: 20 }} />
+				</Button>
 			</Container>
 		);
 	}
 
-	private handleWalletAdd = () => {
+	private handlePlusClick = (e: SyntheticEvent) => {
 		this.props.navigation.navigate('WalletAdd');
 	};
 

@@ -1,5 +1,5 @@
 import { FormikValues } from 'formik';
-import { Button, Footer, Input, Item, Label, Text, View } from 'native-base';
+import { Button, Input, Item, Label, Text, View } from 'native-base';
 import React, { Component, Fragment } from 'react';
 import { StyleSheet } from 'react-native';
 import PocketsList from '../../components/PocketsList';
@@ -17,7 +17,7 @@ export class WalletForm extends Component<WalletFormProps> {
 			<Fragment>
 				<Item inlineLabel>
 					<Label>Name: </Label>
-					<Input />
+					<Input value={formik.values.name} onChangeText={formik.handleChange('name')} />
 				</Item>
 				<Item inlineLabel>
 					<Label>Color: </Label>
@@ -28,30 +28,18 @@ export class WalletForm extends Component<WalletFormProps> {
 					<Input />
 				</Item>
 				<PocketsList pockets={formik.values.pockets} currencies={this.props.currencies} />
-				<Footer style={styles.footer}>
-					<View>
-						<Button success onPress={formik.handleSubmit}>
-							<Text>Create wallet</Text>
-						</Button>
-					</View>
-					<View>
-						<Button warning>
-							<Text>Cancel</Text>
-						</Button>
-					</View>
-				</Footer>
+				<Button info full onPress={formik.handleSubmit}>
+					<Text>Create wallet</Text>
+				</Button>
+				<Button warning full>
+					<Text>Cancel</Text>
+				</Button>
 			</Fragment>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	footer: {
-		flexDirection: 'row',
-		height: 46,
-		backgroundColor: '#fff',
-		justifyContent: 'center'
-	}
 });
 
 export default WalletForm;
