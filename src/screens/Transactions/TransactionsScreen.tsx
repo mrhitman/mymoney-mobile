@@ -15,7 +15,7 @@ interface TransactionsScreenProps extends NavigationInjectedProps {
 export class TransactionsScreen extends Component<TransactionsScreenProps> {
 	public render() {
 		const transactions = chain(this.props.transactions)
-			.groupBy((trx: ITransaction) => trx.date.startOf('day').valueOf())
+			.groupBy((trx: ITransaction) => DateTime.local().startOf('day'))
 			.value();
 
 		// global.console.log(transactions);
