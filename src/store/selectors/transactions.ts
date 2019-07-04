@@ -16,3 +16,7 @@ export const getForPeriod = (transactions: ITransaction[], to: DateTime, from?: 
 export const groupByCategory = (state: Store, type: ITransactionType) => {
 	return groupBy(state.transactions.filter((trx) => trx.type === type), 'category_id');
 };
+
+export const getForWallet = (state: Store, walletId: string) => {
+	return state.transactions.filter((trx) => trx.to_wallet_id === walletId || trx.from_wallet_id === walletId);
+};

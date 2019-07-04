@@ -1,9 +1,13 @@
-import { Container, Content, Text, View } from 'native-base';
+import { Button, Container, Content, Icon, Text, View, List, ListItem, Left, Body, Right } from 'native-base';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import IWallet from '../../types/Wallet';
+import { getWallet } from '../../store/selectors/wallets';
+import Store from '../../types/Store';
+import { getForWallet } from '../../store/selectors/transactions';
+import ITransaction from '../../types/Transaction';
 
 interface WalletDetailScreenProps
 	extends NavigationInjectedProps<{
@@ -12,7 +16,7 @@ interface WalletDetailScreenProps
 	wallets: IWallet[];
 }
 
-export class WalletDetailScreen extends Component<WalletDetailScreenProps> {
+export class WalletDetailScreen extends Component<WalletDetailScreenProps & any> {
 	public render() {
 		const wallet = this.getWallet();
 		return (
@@ -37,17 +41,37 @@ export class WalletDetailScreen extends Component<WalletDetailScreenProps> {
 							<Text style={styles.accountHeaderFilter}>ALL</Text>
 						</View>
 						<View style={styles.wallets}>
-							{/* <WalletShortInfo /> */}
-							{/* <WalletShortInfo /> */}
+							<List>{this.props.getForWallet(this.id).map(this.renderTrx)}</List>
 						</View>
 					</View>
 				</Content>
+				<Button icon rounded warning style={{ bottom: 16, right: 26, position: 'absolute' }}>
+					<Icon name="md-create" style={{ fontSize: 20 }} />
+				</Button>
 			</Container>
 		);
 	}
 
+	protected renderTrx = (trx: ITransaction) => {
+		const category = this.props.categories.find((category) => category.id === trx.category_id)!;
+		return (
+			<ListItem key={trx.id}>
+				<Body>
+					<Text>{category.name}</Text>
+				</Body>
+				<Right>
+					<Text>{trx.amount}</Text>
+				</Right>
+			</ListItem>
+		);
+	};
+
+	protected get id() {
+		return this.props.navigation.getParam('id');
+	}
+
 	protected getWallet = () => {
-		return this.props.wallets.find((wallet) => wallet.id === this.props.navigation.getParam('id'))!;
+		return this.props.getWallet(this.id);
 	};
 }
 
@@ -136,4 +160,11 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect((state) => state, () => ({}))(WalletDetailScreen);
+export default connect(
+	(state: Store) => ({
+		...state,
+		getWallet: (id: string) => getWallet(state, id),
+		getForWallet: (id: string) => getForWallet(state, id)
+	}),
+	() => ({})
+)(WalletDetailScreen);
