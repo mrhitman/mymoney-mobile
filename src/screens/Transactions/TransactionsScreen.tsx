@@ -1,6 +1,6 @@
 import { chain, map } from 'lodash';
 import { DateTime } from 'luxon';
-import { Button, Container, Content, Footer, Icon, Right } from 'native-base';
+import { Button, Container, Content, Icon } from 'native-base';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -15,10 +15,9 @@ interface TransactionsScreenProps extends NavigationInjectedProps {
 export class TransactionsScreen extends Component<TransactionsScreenProps> {
 	public render() {
 		const transactions = chain(this.props.transactions)
-			.groupBy((trx: ITransaction) => DateTime.local().startOf('day'))
+			.groupBy((trx: ITransaction) => trx.date.startOf('day').valueOf())
 			.value();
 
-		// global.console.log(transactions);
 		return (
 			<Container style={styles.content}>
 				<StatusBar barStyle="light-content" animated />

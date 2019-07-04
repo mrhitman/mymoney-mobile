@@ -26,6 +26,7 @@ interface DayTransactionSummaryReduxProps {
 export class DayTransactionSummary extends Component<DayTransactionSummaryProps & DayTransactionSummaryReduxProps> {
 	public render() {
 		const { day, items } = this.props;
+		global.console.log(day);
 		const dayTitle = day.toFormat('dd LLLL').toUpperCase();
 		return (
 			<View style={styles.container}>

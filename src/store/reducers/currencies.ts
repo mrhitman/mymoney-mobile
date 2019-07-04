@@ -1,10 +1,10 @@
 import uuid from 'uuid';
 
 const initialState = [
-	{ id: uuid(), name: 'Ukrainian Grivna', country: 'Ukraine', short: 'UAH', symbol: '₴' },
-	{ id: uuid(), name: 'American Dollar', country: 'USA', short: 'USD', symbol: '$' },
-	{ id: uuid(), name: 'Pounds sterling', country: 'United Kindom', short: 'GBR', symbol: '£' },
-	{ id: uuid(), name: 'Euro area countries', country: 'Ukraine', short: 'EUR', symbol: '€' }
+	{ id: '1', name: 'Ukrainian Grivna', country: 'Ukraine', short: 'UAH', symbol: '₴' },
+	{ id: '2', name: 'American Dollar', country: 'USA', short: 'USD', symbol: '$' },
+	{ id: '3', name: 'Pounds sterling', country: 'United Kindom', short: 'GBR', symbol: '£' },
+	{ id: '4', name: 'Euro area countries', country: 'Ukraine', short: 'EUR', symbol: '€' }
 ];
 
 export const defaultCurrencies = initialState;

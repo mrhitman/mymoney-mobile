@@ -1,19 +1,18 @@
 import uuid from 'uuid';
-import { defaultCurrencies } from './currencies';
 
 const initialState = [
 	{
-		id: uuid(),
+		id: '1',
 		name: 'Credit card',
 		color: 'rgba(255,0,0,0.5)',
 		icon: {
 			name: 'cc-mastercard',
 			type: 'FontAwesome'
 		},
-		pockets: [ { id: uuid(), currency_id: defaultCurrencies[1].id, amount: 5322 } ]
+		pockets: [ { id: uuid(), currency_id: '1', amount: 5322 } ]
 	},
 	{
-		id: uuid(),
+		id: '2',
 		name: 'Money savings',
 		color: 'rgba(150,200,100,0.6)',
 		icon: {
@@ -21,9 +20,9 @@ const initialState = [
 			type: 'FontAwesome5'
 		},
 		pockets: [
-			{ id: uuid(), currency_id: defaultCurrencies[0].id, amount: 3020 },
-			{ id: uuid(), currency_id: defaultCurrencies[1].id, amount: 18123 },
-			{ id: uuid(), currency_id: defaultCurrencies[2].id, amount: 405 }
+			{ id: uuid(), currency_id: '1', amount: 3020 },
+			{ id: uuid(), currency_id: '2', amount: 18123 },
+			{ id: uuid(), currency_id: '3', amount: 405 }
 		]
 	}
 ];

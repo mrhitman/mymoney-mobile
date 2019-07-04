@@ -8,7 +8,7 @@ import { defaultWallets } from './wallets';
 
 const initialState = [
 	{
-		id: uuid(),
+		id: '1',
 		category_id: find(defaultCategories, (category) => category.name === 'Coffee')!.id,
 		date: DateTime.local(),
 		from_wallet_id: defaultWallets[0].id,
@@ -19,7 +19,7 @@ const initialState = [
 		description: ''
 	},
 	{
-		id: uuid(),
+		id: '2',
 		category_id: find(defaultCategories, (category) => category.name === 'Deposit')!.id,
 		date: DateTime.local(),
 		from_wallet_id: defaultWallets[0].id,
@@ -30,7 +30,7 @@ const initialState = [
 		description: ''
 	},
 	{
-		id: uuid(),
+		id: '3',
 		category_id: find(defaultCategories, (category) => category.name === 'Salary')!.id,
 		date: DateTime.local(),
 		from_wallet_id: defaultWallets[0].id,
@@ -41,7 +41,7 @@ const initialState = [
 		description: ''
 	},
 	{
-		id: uuid(),
+		id: '4',
 		category_id: find(defaultCategories, (category) => category.name === 'Sport')!.id,
 		date: DateTime.local().minus({ day: 1 }),
 		from_wallet_id: defaultWallets[0].id,
@@ -52,7 +52,7 @@ const initialState = [
 		description: ''
 	},
 	{
-		id: uuid(),
+		id: '5',
 		category_id: find(defaultCategories, (category) => category.name === 'Food')!.id,
 		date: DateTime.local().minus({ day: 1 }),
 		from_wallet_id: defaultWallets[0].id,
@@ -63,7 +63,7 @@ const initialState = [
 		description: ''
 	},
 	{
-		id: uuid(),
+		id: '6',
 		category_id: find(defaultCategories, (category) => category.name === 'Salary')!.id,
 		date: DateTime.local().minus({ day: 1 }),
 		from_wallet_id: defaultWallets[0].id,
