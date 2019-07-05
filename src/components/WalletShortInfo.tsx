@@ -1,9 +1,9 @@
-import { Text, View, Icon } from 'native-base';
+import { Icon, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import IWallet from '../types/Wallet';
-import IPocket from '../types/Pocket';
 import ICurrency from '../types/Currency';
+import IPocket from '../types/Pocket';
+import IWallet from '../types/Wallet';
 
 interface WalletShortInfoProps {
 	wallet: IWallet;
@@ -43,10 +43,16 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'column',
 		margin: 12,
+		marginLeft: 20,
+		marginRight: 20,
 		backgroundColor: '#fff',
-		borderWidth: 0.6,
+		borderWidth: 0.5,
 		borderColor: 'rgba(0,0,0,0.3)',
-		borderRadius: 12
+		borderRadius: 20,
+		shadowOffset: { width: 0, height: 10 },
+		shadowRadius: 14,
+		shadowOpacity: 0.5,
+		elevation: 4
 	},
 	header: {
 		fontFamily: 'Questrial-Regular',

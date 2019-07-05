@@ -1,8 +1,8 @@
-import { List, ListItem, Text, View } from 'native-base';
+import { Left, List, ListItem, Text, Right, Icon } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import IPocket from '../types/Pocket';
 import ICurrency from '../types/Currency';
+import IPocket from '../types/Pocket';
 
 interface PocketsListProps {
 	pockets: IPocket[];
@@ -20,11 +20,14 @@ export class PocketsList extends Component<PocketsListProps> {
 		const currency = currencies.find((c) => c.id === pocket.currency_id)!;
 		return (
 			<ListItem key={pocket.id}>
-				<View style={styles.itemContainer}>
+				<Left style={styles.itemContainer}>
 					<Text>
 						{currency.name} {pocket.amount} {currency.symbol}
 					</Text>
-				</View>
+				</Left>
+				<Right>
+					<Icon name="trash" />
+				</Right>
 			</ListItem>
 		);
 	};

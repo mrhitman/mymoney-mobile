@@ -51,8 +51,8 @@ export class WalletAddScreen extends Component<NavigationInjectedProps & any> {
 		this.props.createWallet(values);
 		Toast.show({
 			text: `Wallet "${values.name}" created!`,
-      position: 'bottom',
-      duration: 2500,
+			position: 'bottom',
+			duration: 2500,
 			buttonText: 'Ok'
 		});
 		this.props.navigation.goBack();

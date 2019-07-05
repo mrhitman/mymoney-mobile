@@ -38,6 +38,8 @@ export default (state = initialState, action) => {
 					...action.payload
 				}
 			];
+		case 'WALLET_DELETE':
+			return state.filter((wallet) => wallet.id !== action.payload);
 		default:
 			return state;
 	}

@@ -1,13 +1,13 @@
-import { Button, Container, Content, Icon, Text, View, List, ListItem, Left, Body, Right } from 'native-base';
+import { Body, Button, Container, Content, Icon, List, ListItem, Right, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
-import IWallet from '../../types/Wallet';
+import { getForWallet } from '../../store/selectors/transactions';
 import { getWallet } from '../../store/selectors/wallets';
 import Store from '../../types/Store';
-import { getForWallet } from '../../store/selectors/transactions';
 import ITransaction from '../../types/Transaction';
+import IWallet from '../../types/Wallet';
 
 interface WalletDetailScreenProps
 	extends NavigationInjectedProps<{
@@ -25,6 +25,9 @@ export class WalletDetailScreen extends Component<WalletDetailScreenProps & any>
 				<Content padder>
 					<View style={styles.header}>
 						<Text style={styles.headerTitle}>{wallet.name}</Text>
+						<Button icon rounded danger onPress={this.handleDelete}>
+							<Icon name="trash" />
+						</Button>
 					</View>
 					<View style={styles.info}>
 						<Text style={styles.infoTitle}>Available Balance</Text>
@@ -46,7 +49,7 @@ export class WalletDetailScreen extends Component<WalletDetailScreenProps & any>
 					</View>
 				</Content>
 				<Button icon rounded warning style={{ bottom: 16, right: 26, position: 'absolute' }}>
-					<Icon name="md-create" style={{ fontSize: 20 }} />
+					<Icon name="create" style={{ fontSize: 20 }} />
 				</Button>
 			</Container>
 		);
@@ -56,8 +59,9 @@ export class WalletDetailScreen extends Component<WalletDetailScreenProps & any>
 		const category = this.props.categories.find((category) => category.id === trx.category_id)!;
 		return (
 			<ListItem key={trx.id}>
-				<Body>
+				<Body style={{ display: 'flex', flexDirection: 'row' }}>
 					<Text>{category.name}</Text>
+					<Text style={{ marginLeft: 30, fontStyle: 'italic' }}>{trx.description && `(${trx.description})`}</Text>
 				</Body>
 				<Right>
 					<Text>{trx.amount}</Text>
@@ -68,6 +72,11 @@ export class WalletDetailScreen extends Component<WalletDetailScreenProps & any>
 
 	protected get id() {
 		return this.props.navigation.getParam('id');
+	}
+
+	protected handleDelete = () => {
+		this.props.navigation.goBack();
+		this.props.walletDelete(this.id);
 	}
 
 	protected getWallet = () => {
@@ -166,5 +175,9 @@ export default connect(
 		getWallet: (id: string) => getWallet(state, id),
 		getForWallet: (id: string) => getForWallet(state, id)
 	}),
-	() => ({})
+	(dispatch) => ({
+		walletDelete: (id: number) => {
+			dispatch({ type: 'WALLET_DELETE', payload: id });
+		}
+	})
 )(WalletDetailScreen);
