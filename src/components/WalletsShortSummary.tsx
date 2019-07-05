@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { numberWithCommas } from '../helpers/formatter';
 import IStore from '../types/Store';
 import { totalAmount } from '../store/selectors/account';
+import i18n from '../i18n/i18n';
 
 interface WalletsShortSummaryProps {
 	totalAmount: number;
@@ -27,7 +28,7 @@ export class WalletsShortSummary extends Component<WalletsShortSummaryProps> {
 	public render() {
 		return (
 			<View style={styles.info}>
-				<Text style={styles.infoTitle}>Available Balance</Text>
+				<Text style={styles.infoTitle}>{i18n.t('availableBalance')}</Text>
 				<Text style={styles.infoSum}>{numberWithCommas(this.props.totalAmount)} UAH</Text>
 				<View style={styles.infoTotal}>
 					<View style={styles.infoTotalView}>

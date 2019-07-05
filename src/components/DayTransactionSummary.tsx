@@ -5,11 +5,12 @@ import { StyleSheet } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { numberWithCommas } from '../helpers/formatter';
+import i18n from '../i18n/i18n';
 import ICategory from '../types/Category';
+import ICurrency from '../types/Currency';
 import IStore from '../types/Store';
 import ITransaction from '../types/Transaction';
 import IWallet from '../types/Wallet';
-import ICurrency from '../types/Currency';
 
 interface DayTransactionSummaryProps {
 	day: DateTime;
@@ -26,7 +27,6 @@ interface DayTransactionSummaryReduxProps {
 export class DayTransactionSummary extends Component<DayTransactionSummaryProps & DayTransactionSummaryReduxProps> {
 	public render() {
 		const { day, items } = this.props;
-		global.console.log(day);
 		const dayTitle = day.toFormat('dd LLLL').toUpperCase();
 		return (
 			<View style={styles.container}>
@@ -52,7 +52,9 @@ export class DayTransactionSummary extends Component<DayTransactionSummaryProps 
 				<View style={styles.trxContainer}>
 					<View style={styles.operation}>
 						<Text style={styles.operationName}>{category.name}</Text>
-						<Text style={trx.type === 'income' ? styles.incomeAmount : styles.outcomeAmount}>{trx.amount} {currency.symbol}</Text>
+						<Text style={trx.type === 'income' ? styles.incomeAmount : styles.outcomeAmount}>
+							{trx.amount} {currency.symbol}
+						</Text>
 					</View>
 					<View style={styles.wallet}>
 						<Icon {...fromWallet.icon} style={[ styles.walletIcon, { color: fromWallet.color } ]} />
@@ -78,10 +80,10 @@ export class DayTransactionSummary extends Component<DayTransactionSummaryProps 
 		let additionTitle = day.toFormat('cccc').toUpperCase();
 		const today = DateTime.local();
 		if (today.toFormat('YYYY MM DD') === day.toFormat('YYYY MM DD')) {
-			additionTitle = 'TODAY';
+			additionTitle = i18n.t('today').toUpperCase();
 		}
 		if (today.minus({ day: 1 }).toFormat('YYYY MM DD') === day.toFormat('YYYY MM DD')) {
-			additionTitle = 'YESTERDAY';
+			additionTitle = i18n.t('yesterday').toUpperCase();
 		}
 		return additionTitle;
 	}

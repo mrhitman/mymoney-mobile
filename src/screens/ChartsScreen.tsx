@@ -8,6 +8,7 @@ import { groupByCategory } from '../store/selectors/transactions';
 import ICategory from '../types/Category';
 import Store from '../types/Store';
 import ITransaction, { ITransactionType } from '../types/Transaction';
+import i18n from '../i18n/i18n';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -48,10 +49,10 @@ export class ChartsScreen extends Component<ChartsScreenProps, ChartsScreenState
 				</Header>
 				<Segment>
 					<Button first active={this.state.type === 'income'}>
-						<Text>Income</Text>
+						<Text>{i18n.t('income')}</Text>
 					</Button>
 					<Button active={this.state.type === 'outcome'}>
-						<Text>Outcome</Text>
+						<Text>{i18n.t('outcome')}</Text>
 					</Button>
 					<Button last>
 						<Text>Transfers</Text>

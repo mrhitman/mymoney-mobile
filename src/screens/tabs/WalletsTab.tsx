@@ -2,6 +2,7 @@ import { createStackNavigator } from 'react-navigation';
 import WalletAddScreen from '../Wallets/WalletAddScreen';
 import WalletDetailScreen from '../Wallets/WalletDetailScreen';
 import WalletsScreen from '../Wallets/WalletsScreen';
+import i18n from '../../i18n/i18n';
 
 export default createStackNavigator({
 	WalletsList: {
@@ -13,7 +14,7 @@ export default createStackNavigator({
 	WalletAdd: {
 		screen: WalletAddScreen,
 		navigationOptions: {
-			title: 'Add New Wallet',
+			title: i18n.t('addWallet'),
 			headerStyle: {
 				elevation: 0,
 				shadowOpacity: 0,

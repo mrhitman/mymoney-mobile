@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { defaultCurrencies } from '../../store/reducers/currencies';
 import WalletForm from './WalletForm';
+import i18n from '../../i18n/i18n';
 
 export class WalletAddScreen extends Component<NavigationInjectedProps & any> {
 	public get initialValues() {
@@ -50,7 +51,7 @@ export class WalletAddScreen extends Component<NavigationInjectedProps & any> {
 	protected handleSubmit = (values) => {
 		this.props.createWallet(values);
 		Toast.show({
-			text: `Wallet "${values.name}" created!`,
+			text: `${i18n.t('wallet')} "${values.name}" created!`,
 			position: 'bottom',
 			duration: 2500,
 			buttonText: 'Ok'

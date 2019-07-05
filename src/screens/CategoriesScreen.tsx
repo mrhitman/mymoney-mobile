@@ -2,6 +2,7 @@ import { Container, Content, Icon, List, ListItem, Picker, Text, View } from 'na
 import React, { Component } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import i18n from '../i18n/i18n';
 import { getCategoriesByType } from '../store/selectors/categories';
 import ICategory from '../types/Category';
 import Store from '../types/Store';
@@ -22,7 +23,7 @@ export class CategoriesScreen extends Component<CategoriesScreenProps> {
 				<StatusBar barStyle="light-content" animated />
 				<Content padder>
 					<View style={styles.accountHeader}>
-						<Text style={styles.accountHeaderText}>YOUR CATEGORIES</Text>
+						<Text style={styles.accountHeaderText}>{i18n.t('yourCategories')}</Text>
 						<Picker
 							mode="dropdown"
 							note
@@ -33,9 +34,9 @@ export class CategoriesScreen extends Component<CategoriesScreenProps> {
 							selectedValue={this.state.selected}
 							onValueChange={this.handleChangeFilter}
 						>
-							<Picker.Item label="ALL" value="all" />
-							<Picker.Item label="INCOME" value="income" />
-							<Picker.Item label="OUTCOME" value="outcome" />
+							<Picker.Item label={i18n.t('all').toUpperCase()} value="all" />
+							<Picker.Item label={i18n.t('income').toUpperCase()} value="income" />
+							<Picker.Item label={i18n.t('outcome').toUpperCase()} value="outcome" />
 						</Picker>
 					</View>
 					<View>
@@ -93,8 +94,7 @@ const styles = StyleSheet.create({
 export default connect(
 	(state: Store) => ({
 		...state,
-		getCategoriesByType: (type: string) =>
-			type === 'all' ? state.categories : getCategoriesByType(state, type)
+		getCategoriesByType: (type: string) => (type === 'all' ? state.categories : getCategoriesByType(state, type))
 	}),
 	() => ({})
 )(CategoriesScreen);

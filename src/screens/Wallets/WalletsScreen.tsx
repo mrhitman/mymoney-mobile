@@ -8,6 +8,7 @@ import WalletShortInfo from '../../components/WalletShortInfo';
 import WalletsShortSummary from '../../components/WalletsShortSummary';
 import ICurrency from '../../types/Currency';
 import IWallet from '../../types/Wallet';
+import i18n from '../../i18n/i18n';
 
 interface IWalletScreenProps extends NavigationInjectedProps {
 	wallets: IWallet[];
@@ -20,13 +21,13 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
 			<Container style={styles.content}>
 				<Content>
 					<View style={styles.header}>
-						<Text style={styles.headerTitle}>Your Wallets</Text>
+						<Text style={styles.headerTitle}>{i18n.t('yourWallets')}</Text>
 					</View>
 					<WalletsShortSummary />
 					<View style={styles.account}>
 						<View style={styles.accountHeader}>
-							<Text style={styles.accountHeaderText}>YOUR ACCOUNT</Text>
-							<Text style={styles.accountHeaderFilter}>ALL</Text>
+							<Text style={styles.accountHeaderText}>{i18n.t('yourAccount').toUpperCase()}</Text>
+							<Text style={styles.accountHeaderFilter}>{i18n.t('all').toUpperCase()}</Text>
 						</View>
 						<Content style={styles.wallets}>
 							{this.props.wallets.map((wallet) => (
