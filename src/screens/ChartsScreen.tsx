@@ -44,7 +44,7 @@ export class ChartsScreen extends Component<ChartsScreenProps, ChartsScreenState
 			<Container style={styles.content}>
 				<Header hasSegment>
 					<Left>
-						<Title>Charts</Title>
+						<Title>Charts </Title>
 					</Left>
 				</Header>
 				<Segment>
