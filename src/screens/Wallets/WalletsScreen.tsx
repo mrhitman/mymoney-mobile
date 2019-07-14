@@ -51,7 +51,7 @@ export class WalletsScreen extends Component<IWalletScreenProps> {
 		);
 	}
 
-	private handlePlusClick = (e: SyntheticEvent) => {
+	private handlePlusClick = () => {
 		this.props.navigation.navigate('WalletAdd');
 	};
 
