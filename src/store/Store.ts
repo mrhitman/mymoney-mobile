@@ -11,7 +11,6 @@ import currencies from './reducers/currencies';
 import styling from './reducers/styling';
 import transactions from './reducers/transactions';
 import wallets from './reducers/wallets';
-// import AsyncStorage from '@react-native-community/async-storage';
 
 const SetTransform = createTransform(
 	(inboundState: any[], key) => {
@@ -23,7 +22,6 @@ const SetTransform = createTransform(
 	{ whitelist: [ 'transactions' ] }
 );
 
-// const compressor = createCompressor();
 const persistConfig = {
 	key: 'root',
 	storage,
@@ -41,7 +39,6 @@ const reducers = combineReducers({
 });
 const pReducer = persistReducer(persistConfig, reducers);
 const store = createStore(pReducer, devToolsEnhancer());
-// const store = createStore(reducers, devToolsEnhancer());
 
 export default store;
 export const persistor = persistStore(store);

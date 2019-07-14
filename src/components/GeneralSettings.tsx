@@ -1,7 +1,9 @@
-import { Body, Icon, Left, List, ListItem, Right, Text, View } from 'native-base';
+import { Body, Icon, Left, List, ListItem, Right, Text, View, Picker } from 'native-base';
 import React, { Component } from 'react';
+import { Languages } from '../store/reducers/account';
+import { connect } from 'react-redux';
 
-export class GeneralSettings extends Component {
+export class GeneralSettings extends Component<any> {
 	public render() {
 		return (
 			<View>
@@ -14,7 +16,10 @@ export class GeneralSettings extends Component {
 							<Text>Language</Text>
 						</Body>
 						<Right>
-							<Text>EN</Text>
+							<Picker onValueChange={this.handleChangeLanguage}>
+								<Picker.Item label="RU" value={Languages.ru} />
+								<Picker.Item label="EN" value={Languages.en} />
+							</Picker>
 						</Right>
 					</ListItem>
 					<ListItem itemDivider />
@@ -78,6 +83,19 @@ export class GeneralSettings extends Component {
 			</View>
 		);
 	}
+
+	protected handleChangeLangualge = (value: Languages) => {
+		this.props.changeLanguage(value);
+	};
 }
 
-export default GeneralSettings;
+export default connect(
+	(state) => ({
+		...state
+	}),
+	(dispatch) => ({
+		changeLanguage: (language: Languages) => {
+			dispatch({ action: 'LANGUAGE_CHANGE', payload: language });
+		}
+	})
+)(GeneralSettings);

@@ -7,7 +7,7 @@ i18n.translations = {
 	en,
 	ru
 };
-i18n.locale = 'ru';
+i18n.locale = 'en';
 
 
 export default i18n;

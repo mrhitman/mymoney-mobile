@@ -50,7 +50,7 @@ export class CategoriesScreen extends Component<CategoriesScreenProps> {
 	protected renderCategory = (category: ICategory) => {
 		return (
 			<ListItem key={category.id}>
-				<Text>{category.name}</Text>
+				<Text>{i18n.t(category.name)}</Text>
 			</ListItem>
 		);
 	};

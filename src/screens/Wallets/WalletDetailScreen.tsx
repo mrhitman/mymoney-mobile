@@ -4,7 +4,7 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import { getForWallet } from '../../store/selectors/transactions';
-import { getWallet } from '../../store/selectors/wallets';
+import { getWalletById } from '../../store/selectors/wallets';
 import Store from '../../types/Store';
 import ITransaction from '../../types/Transaction';
 import IWallet from '../../types/Wallet';
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
 export default connect(
 	(state: Store) => ({
 		...state,
-		getWallet: (id: string) => getWallet(state, id),
+		getWallet: (id: string) => getWalletById(state, id),
 		getForWallet: (id: string) => getForWallet(state, id)
 	}),
 	(dispatch) => ({

@@ -8,8 +8,13 @@ import uuid from 'uuid';
 import { defaultCurrencies } from '../../store/reducers/currencies';
 import WalletForm from './WalletForm';
 import i18n from '../../i18n/i18n';
+import { WALLET_ADD } from '../../store/reducers/wallets';
 
-export class WalletAddScreen extends Component<NavigationInjectedProps & any> {
+interface WalletAddScreenProps extends NavigationInjectedProps {
+	createWallet: (values) => void;
+}
+
+export class WalletAddScreen extends Component<WalletAddScreenProps> {
 	public get initialValues() {
 		return {
 			name: '',
@@ -102,7 +107,7 @@ export default connect(
 	(state) => state,
 	(dispatch) => ({
 		createWallet: (values) => {
-			dispatch({ type: 'WALLET_ADD', payload: values });
+			dispatch({ type: WALLET_ADD, payload: values });
 		}
 	})
 )(WalletAddScreen);

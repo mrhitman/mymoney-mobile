@@ -10,7 +10,7 @@ import i18n from '../../i18n/i18n';
 const initialState = [
 	{
 		id: '1',
-		category_id: find(defaultCategories, (category) => category.name === i18n.t('coffee'))!.id,
+		category_id: find(defaultCategories, (category) => category.name === 'coffee')!.id,
 		date: DateTime.local(),
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
@@ -21,7 +21,7 @@ const initialState = [
 	},
 	{
 		id: '2',
-		category_id: find(defaultCategories, (category) => category.name === i18n.t('deposit'))!.id,
+		category_id: find(defaultCategories, (category) => category.name === 'deposit')!.id,
 		date: DateTime.local(),
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
@@ -32,7 +32,7 @@ const initialState = [
 	},
 	{
 		id: '3',
-		category_id: find(defaultCategories, (category) => category.name === i18n.t('salary'))!.id,
+		category_id: find(defaultCategories, (category) => category.name === 'salary')!.id,
 		date: DateTime.local(),
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
@@ -43,7 +43,7 @@ const initialState = [
 	},
 	{
 		id: '4',
-		category_id: find(defaultCategories, (category) => category.name === i18n.t('sport'))!.id,
+		category_id: find(defaultCategories, (category) => category.name === 'sport')!.id,
 		date: DateTime.local().minus({ day: 1 }),
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
@@ -54,7 +54,7 @@ const initialState = [
 	},
 	{
 		id: '5',
-		category_id: find(defaultCategories, (category) => category.name === i18n.t('food'))!.id,
+		category_id: find(defaultCategories, (category) => category.name === 'food')!.id,
 		date: DateTime.local().minus({ day: 1 }),
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',
@@ -65,7 +65,7 @@ const initialState = [
 	},
 	{
 		id: '6',
-		category_id: find(defaultCategories, (category) => category.name === i18n.t('salary'))!.id,
+		category_id: find(defaultCategories, (category) => category.name === 'salary')!.id,
 		date: DateTime.local().minus({ day: 1 }),
 		from_wallet_id: defaultWallets[0].id,
 		to_wallet_id: '0',

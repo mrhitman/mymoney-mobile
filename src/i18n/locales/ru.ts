@@ -37,5 +37,6 @@ export default {
 	deposit: 'Депозиты',
 	gift: 'Подарок',
 	premial: 'Премия',
-	coffee: 'Кофе'
+	coffee: 'Кофе',
+	ua_curr: 'Украинская гривна',
 };
