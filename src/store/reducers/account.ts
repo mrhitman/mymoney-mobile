@@ -12,11 +12,7 @@ const initialState = {
 	primaryCurrency: 'UAH',
 	primaryCurrencyId: defaultCurrencies[0].id,
 	secondaryCurrency: 'UAH',
-<<<<<<< HEAD
 	language: Languages.ru
-=======
-	language: 'en'
->>>>>>> 195900c5fb15cfe1befdcd4da6fa550ffd996f53
 };
 
 export default (state = initialState, action) => {
