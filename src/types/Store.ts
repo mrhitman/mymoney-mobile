@@ -5,7 +5,6 @@ import IWallet from './Wallet';
 
 interface Store {
 	account: {
-		totalAmount: number;
 		primaryCurrency: 'UAH';
 		primaryCurrencyId: string;
 		secondaryCurrency: 'UAH';

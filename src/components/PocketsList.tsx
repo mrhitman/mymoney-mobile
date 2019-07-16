@@ -1,6 +1,7 @@
-import { Left, List, ListItem, Text, Right, Icon } from 'native-base';
+import { Icon, Left, List, ListItem, Right, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import Flag from 'react-native-flags-kit';
 import ICurrency from '../types/Currency';
 import IPocket from '../types/Pocket';
 
@@ -21,9 +22,12 @@ export class PocketsList extends Component<PocketsListProps> {
 		return (
 			<ListItem key={pocket.id}>
 				<Left style={styles.itemContainer}>
-					<Text>
-						{currency.name} {pocket.amount} {currency.symbol}
-					</Text>
+					<Flag code={currency.code} size={32} />
+					<View style={styles.flag}>
+						<Text>
+							{currency.name} {pocket.amount} {currency.symbol}
+						</Text>
+					</View>
 				</Left>
 				<Right>
 					<Icon name="trash" />
@@ -36,6 +40,9 @@ export class PocketsList extends Component<PocketsListProps> {
 const styles = StyleSheet.create({
 	itemContainer: {
 		flexDirection: 'row'
+	},
+	flag: {
+		marginLeft: 12
 	}
 });
 

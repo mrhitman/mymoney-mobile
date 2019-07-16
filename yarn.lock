@@ -5334,6 +5334,11 @@ react-native-chart-kit@^3.0.0:
     paths-js "^0.4.7"
     point-in-polygon "^1.0.1"
 
+react-native-color-palette@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-color-palette/-/react-native-color-palette-2.0.3.tgz#0be382911554b10d2e0351b8772f4b5d50ca03ab"
+  integrity sha512-/7LHqSbCxRCJdY/tZqdNF4EZwNeXEYdDS6tN7QkqvD3bwSa9NXFHxx93Ch0ctzFySDvv0kjT9lJ0mkeWutaHZw==
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
@@ -5348,6 +5353,13 @@ react-native-easy-grid@0.2.1:
   integrity sha512-u90U4lf5L/PUmq7HoczFKgyElmBCpb3gu21TOWL7pq4gSH2Hz0EGm1Bgu0SQacO9v6jfQbS7JfE+xtMg6MHluQ==
   dependencies:
     lodash "4.17.11"
+
+react-native-flags-kit@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-flags-kit/-/react-native-flags-kit-1.0.1.tgz#236d77d96ec648bdbb4b692b1af1e541a7e29ca5"
+  integrity sha512-PG0TxIhYDQkT6TdwCHBiQZo+WQQNTagVWp7MrdOogb5Ja3D721v5RFpOuf0xXbd8Az4vxXBh2Igt9n5NQcomWw==
+  dependencies:
+    prop-types "^15.6.2"
 
 react-native-gesture-handler@^1.3.0:
   version "1.3.0"

@@ -18,7 +18,7 @@ export class WalletAddScreen extends Component<WalletAddScreenProps> {
 	public get initialValues() {
 		return {
 			name: '',
-			color: 'rgba(255,0,0,0.5)',
+			color: '',
 			icon: {
 				name: 'cc-mastercard',
 				type: 'FontAwesome'
