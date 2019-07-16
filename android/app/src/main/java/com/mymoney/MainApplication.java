@@ -26,7 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new SvgPackage(),
+          // new SvgPackage(), // @TODO check this
           new RNGestureHandlerPackage(),
           new RNI18nPackage()
       );
