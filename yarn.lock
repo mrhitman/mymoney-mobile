@@ -5354,13 +5354,6 @@ react-native-easy-grid@0.2.1:
   dependencies:
     lodash "4.17.11"
 
-react-native-flags-kit@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-flags-kit/-/react-native-flags-kit-1.0.1.tgz#236d77d96ec648bdbb4b692b1af1e541a7e29ca5"
-  integrity sha512-PG0TxIhYDQkT6TdwCHBiQZo+WQQNTagVWp7MrdOogb5Ja3D721v5RFpOuf0xXbd8Az4vxXBh2Igt9n5NQcomWw==
-  dependencies:
-    prop-types "^15.6.2"
-
 react-native-gesture-handler@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.3.0.tgz#d0386f565928ccc1849537f03f2e37fd5f6ad43f"
@@ -5390,6 +5383,11 @@ react-native-keyboard-aware-scroll-view@0.8.0:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
+react-native-round-flags@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-round-flags/-/react-native-round-flags-1.0.4.tgz#b1dcebca26154a9f5f8c379efb14ee57a72e131f"
+  integrity sha1-sdzryiYVSp9fjDee+xTuV6cuEx8=
+
 react-native-safe-area-view@^0.14.1:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.14.5.tgz#eeded66bbeb0807f0a7f5f449e7fb2871f7ecf76"
@@ -5409,10 +5407,10 @@ react-native-svg-uri@^1.2.3:
   dependencies:
     xmldom "^0.1.22"
 
-react-native-svg@^9.5.1:
-  version "9.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.5.1.tgz#eb21fa7eb5d71649620541e6549c6ed425d80240"
-  integrity sha512-cRGfomzG/5LEwuJ6ct3m5yccckeI9aj8BNYwDPVxOeJ84LuJuvk5OqcjlYNeEzOWmWiH+QrFXfpLH1ag04bUeQ==
+react-native-svg@^9.5.3:
+  version "9.5.3"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.5.3.tgz#2389f3ffd700c6441166496a1aeade31ead89c59"
+  integrity sha512-VUOe4TLz7RFdmm/XT9EH87VSwlRykx49qbwJMA+dh9eFM7KPY1qH3kEyN7uRCqJD2eE8toxt9NpjR6ByvtPNlA==
 
 react-native-tab-view@^1.2.0, react-native-tab-view@^1.4.1:
   version "1.4.1"
