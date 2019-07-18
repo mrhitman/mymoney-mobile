@@ -1,14 +1,14 @@
 import { map, random } from 'lodash';
-import { Container, Content, Header, Left, Title, View, Segment, Button, Text } from 'native-base';
+import { Button, Container, Content, Header, Left, Segment, Text, Title, View } from 'native-base';
 import React, { Component } from 'react';
-import { Dimensions, StatusBar, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import { connect } from 'react-redux';
+import i18n from '../i18n/i18n';
 import { groupByCategory } from '../store/selectors/transactions';
 import ICategory from '../types/Category';
 import Store from '../types/Store';
 import ITransaction, { ITransactionType } from '../types/Transaction';
-import i18n from '../i18n/i18n';
 
 const screenWidth = Dimensions.get('window').width;
 

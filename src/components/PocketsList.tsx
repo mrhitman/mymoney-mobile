@@ -1,4 +1,4 @@
-import { Icon, Left, List, ListItem, Right, Text, View, Input, Body, Content, Container } from 'native-base';
+import { Button, Icon, List, SwipeRow, Text, View, Input, Item } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import Flag from 'react-native-round-flags';
@@ -8,6 +8,7 @@ import IPocket from '../types/Pocket';
 interface PocketsListProps {
   pockets: IPocket[];
   currencies: ICurrency[];
+  onDelete: (id: string) => void;
 }
 
 export class PocketsList extends Component<PocketsListProps> {
@@ -20,38 +21,54 @@ export class PocketsList extends Component<PocketsListProps> {
     const { currencies } = this.props;
     const currency = currencies.find((c) => c.id === pocket.currency_id)!;
     return (
-      <ListItem key={pocket.id}>
-        <Left style={styles.itemContainer}>
-          <Flag
-            code={currency.code}
-            style={{
-              width: 32,
-              height: 32
-            }}
-          />
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginLeft: 20, alignItems: 'center' }}>
-            <View>
+      <SwipeRow
+        key={pocket.id}
+        rightOpenValue={-60}
+        body={
+          <View style={styles.itemContainer}>
+            <View style={styles.itemLeft}>
+              <Flag code={currency.code} style={styles.flag} />
               <Text>{currency.name}</Text>
             </View>
-            <View>
-              <Input value={pocket.amount.toString()} />
-            </View>
-            <View>
-              <Text>{currency.symbol}</Text>
+            <View style={{ flex: 1 }}>
+              <Item underline style={styles.amountInput}>
+                <Input defaultValue="0" keyboardType="numeric" />
+              </Item>
             </View>
           </View>
-        </Left>
-        <Right>
-          <Icon name="trash" />
-        </Right>
-      </ListItem>
+        }
+        right={
+          <Button danger onPress={this.handleDelete(currency.id)}>
+            <Icon active name="trash" />
+          </Button>
+        }
+      />
     );
+  };
+
+  protected handleDelete = (currencyId: string) => () => {
+    this.props.onDelete(currencyId);
   };
 }
 
 const styles = StyleSheet.create({
   itemContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+  },
+  itemLeft: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  flag: {
+    width: 28,
+    height: 28,
+    margin: 4,
+    marginRight: 10
+  },
+  amountInput: {
+    marginLeft: 10,
+    marginRight: 10
   }
 });
 

@@ -1,14 +1,14 @@
 import { Button, Container, Content, Icon, Text, View } from 'native-base';
-import React, { Component, SyntheticEvent } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import WalletShortInfo from '../../components/WalletShortInfo';
 import WalletsShortSummary from '../../components/WalletsShortSummary';
+import i18n from '../../i18n/i18n';
 import ICurrency from '../../types/Currency';
 import IWallet from '../../types/Wallet';
-import i18n from '../../i18n/i18n';
 
 interface IWalletScreenProps extends NavigationInjectedProps {
 	wallets: IWallet[];
