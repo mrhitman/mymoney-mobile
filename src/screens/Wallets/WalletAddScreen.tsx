@@ -28,11 +28,6 @@ export class WalletAddScreen extends Component<WalletAddScreenProps> {
 					id: uuid(),
 					currency_id: defaultCurrencies[0].id,
 					amount: 0
-				},
-				{
-					id: uuid(),
-					currency_id: defaultCurrencies[1].id,
-					amount: 0
 				}
 			]
 		};
