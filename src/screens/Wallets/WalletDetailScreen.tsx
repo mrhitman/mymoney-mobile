@@ -8,6 +8,7 @@ import { getWalletById } from '../../store/selectors/wallets';
 import Store from '../../types/Store';
 import ITransaction from '../../types/Transaction';
 import IWallet from '../../types/Wallet';
+import { WALLET_DELETE } from '../../store/reducers/wallets';
 
 interface WalletDetailScreenProps
 	extends NavigationInjectedProps<{
@@ -19,6 +20,10 @@ interface WalletDetailScreenProps
 export class WalletDetailScreen extends Component<WalletDetailScreenProps & any> {
 	public render() {
 		const wallet = this.getWallet();
+		if (!wallet) {
+			this.props.navigation.goBack();
+			return null;
+		}
 		return (
 			<Container style={styles.content}>
 				<StatusBar barStyle="light-content" animated />
@@ -77,7 +82,7 @@ export class WalletDetailScreen extends Component<WalletDetailScreenProps & any>
 	protected handleDelete = () => {
 		this.props.navigation.goBack();
 		this.props.walletDelete(this.id);
-	}
+	};
 
 	protected getWallet = () => {
 		return this.props.getWallet(this.id);
@@ -177,7 +182,7 @@ export default connect(
 	}),
 	(dispatch) => ({
 		walletDelete: (id: number) => {
-			dispatch({ type: 'WALLET_DELETE', payload: id });
+			dispatch({ type: WALLET_DELETE, payload: { id } });
 		}
 	})
 )(WalletDetailScreen);

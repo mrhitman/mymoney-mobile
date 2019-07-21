@@ -1,13 +1,13 @@
 import { FormikProps } from 'formik';
-import { Button, Input, Item, Label, Picker, Text } from 'native-base';
+import { Button, Input, Item, Label, Text } from 'native-base';
 import React, { Component, Fragment } from 'react';
 import uuid from 'uuid';
 import ColorPicker from '../../components/ColorPicker';
+import PocketAddModal from '../../components/PocketAddModal';
 import PocketsList from '../../components/PocketsList';
 import i18n from '../../i18n/i18n';
 import ICurrency from '../../types/Currency';
 import IPocket from '../../types/Pocket';
-import PocketAddModal from '../../components/PocketAddModal';
 
 interface WalletFormProps {
 	formik: FormikProps<{
@@ -23,9 +23,13 @@ export class WalletForm extends Component<WalletFormProps> {
 		const { formik, currencies } = this.props;
 		return (
 			<Fragment>
-				<Item inlineLabel>
+				<Item inlineLabel error={!!formik.errors.name}>
 					<Label>{i18n.t('name')}: </Label>
-					<Input value={formik.values.name} onChangeText={formik.handleChange('name')} />
+					<Input
+						value={formik.values.name}
+						onChangeText={formik.handleChange('name')}
+						placeholder={formik.errors.name}
+					/>
 				</Item>
 				<Item inlineLabel>
 					<Label>{i18n.t('color')}: </Label>

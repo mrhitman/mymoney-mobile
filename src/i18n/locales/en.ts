@@ -22,6 +22,8 @@ export default {
 	wallets: 'Wallets',
 	transaction: 'Transaction',
 	transactions: 'Transactions',
+
+	// categories
 	food: 'Food',
 	items: 'Items',
 	transport: 'Transport',

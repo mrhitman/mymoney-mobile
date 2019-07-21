@@ -9,7 +9,7 @@ interface ColorPickerProps {
 	onChange: (color: string) => void;
 }
 
-const defaultColors = [
+export const defaultColors = [
 	'#C0392B',
 	'#E74C3C',
 	'#9B59B6',

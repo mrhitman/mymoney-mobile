@@ -1,4 +1,4 @@
-import { Button, Input, Item, List, ListItem, Text, View } from 'native-base';
+import { Button, Input, Item, List, ListItem, Text, View, Content } from 'native-base';
 import React, { Component, Fragment } from 'react';
 import { Modal, StyleSheet } from 'react-native';
 import Flag from 'react-native-round-flags';
@@ -19,15 +19,7 @@ export class PocketAddModal extends Component<PocketAddModalProps> {
 		const { search } = this.state;
 		return (
 			<Fragment>
-				<View
-					style={{
-						flex: 1,
-						flexDirection: 'row',
-						justifyContent: 'flex-end',
-						marginRight: 24,
-						marginTop: 16
-					}}
-				>
+				<View style={styles.container}>
 					<Button bordered rounded transparent onPress={this.show}>
 						<Text>Add pocket</Text>
 					</Button>
@@ -35,7 +27,7 @@ export class PocketAddModal extends Component<PocketAddModalProps> {
 				<Modal visible={this.state.show} animationType="slide" onRequestClose={this.hide}>
 					<View style={{ padding: 20 }}>
 						<Item bordered>
-							<Input onChangeText={(value) => this.setState({ search: value })} />
+							<Input onChangeText={this.handleSearch} placeholder="Search..." />
 						</Item>
 						<List>
 							{this.props.currencies
@@ -59,6 +51,10 @@ export class PocketAddModal extends Component<PocketAddModalProps> {
 		);
 	}
 
+	protected handleSearch = (value) => {
+		this.setState({ search: value });
+	};
+
 	protected show = () => {
 		this.setState({ show: true });
 	};
@@ -74,6 +70,14 @@ export class PocketAddModal extends Component<PocketAddModalProps> {
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+		marginRight: 24,
+		marginTop: 16,
+		marginBottom: 16
+	},
 	itemContainer: {
 		flex: 1,
 		flexDirection: 'row'

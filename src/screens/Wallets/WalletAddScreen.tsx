@@ -1,35 +1,50 @@
 import { Formik } from 'formik';
+import { sample } from 'lodash';
 import { Container, Content, Toast } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
-import uuid from 'uuid';
-import { defaultCurrencies } from '../../store/reducers/currencies';
-import WalletForm from './WalletForm';
+import * as Yup from 'yup';
+import { defaultColors } from '../../components/ColorPicker';
 import i18n from '../../i18n/i18n';
+import { defaultCurrencies } from '../../store/reducers/currencies';
 import { WALLET_ADD } from '../../store/reducers/wallets';
+import WalletForm from './WalletForm';
 
 interface WalletAddScreenProps extends NavigationInjectedProps {
 	createWallet: (values) => void;
 }
 
+interface WalletAddFields {
+	name: string;
+	color: string;
+	icon: {
+		name: string;
+		type: string;
+	};
+	pockets: Array<{
+		id: string;
+		currency_id: string;
+		amount: number;
+	}>;
+}
+
+const WalletAddSchema = Yup.object().shape({
+	name: Yup.string().required('Wallet should have some name'),
+	color: Yup.string().required('Choose some color')
+});
+
 export class WalletAddScreen extends Component<WalletAddScreenProps> {
-	public get initialValues() {
+	public get initialValues(): WalletAddFields {
 		return {
 			name: '',
-			color: '',
+			color: sample(defaultColors)!,
 			icon: {
 				name: 'cc-mastercard',
 				type: 'FontAwesome'
 			},
-			pockets: [
-				{
-					id: uuid(),
-					currency_id: defaultCurrencies[0].id,
-					amount: 0
-				}
-			]
+			pockets: []
 		};
 	}
 
@@ -41,6 +56,7 @@ export class WalletAddScreen extends Component<WalletAddScreenProps> {
 						initialValues={this.initialValues}
 						onSubmit={this.handleSubmit}
 						onReset={this.handleSubmit}
+						validationSchema={WalletAddSchema}
 						render={(props) => <WalletForm formik={props} currencies={defaultCurrencies} />}
 					/>
 				</Content>
@@ -48,7 +64,7 @@ export class WalletAddScreen extends Component<WalletAddScreenProps> {
 		);
 	}
 
-	protected handleSubmit = (values) => {
+	protected handleSubmit = (values: WalletAddFields) => {
 		this.props.createWallet(values);
 		Toast.show({
 			text: `${i18n.t('wallet')} "${values.name}" created!`,
