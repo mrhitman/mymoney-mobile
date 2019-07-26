@@ -11,6 +11,7 @@ import currencies from './reducers/currencies';
 import styling from './reducers/styling';
 import transactions from './reducers/transactions';
 import wallets from './reducers/wallets';
+import Api from '../../src/api';
 
 const SetTransform = createTransform(
 	(inboundState: any[], key) => {
@@ -26,7 +27,8 @@ const persistConfig = {
 	key: 'root',
 	storage,
 	stateReconciler: autoMergeLevel2,
-	transforms: [ SetTransform ]
+	transforms: [ SetTransform ],
+	whitelist: [ 'api' ]
 };
 
 const reducers = combineReducers({
@@ -35,8 +37,10 @@ const reducers = combineReducers({
 	transactions,
 	categories,
 	currencies,
-	styling
+	styling,
+	api: () => new Api()
 });
+
 const pReducer = persistReducer(persistConfig, reducers);
 const store = createStore(pReducer, devToolsEnhancer());
 

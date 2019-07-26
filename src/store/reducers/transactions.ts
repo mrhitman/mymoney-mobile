@@ -5,7 +5,6 @@ import ITransaction, { ITransactionType } from '../../types/Transaction';
 import { defaultCategories } from './categories';
 import { defaultCurrencies } from './currencies';
 import { defaultWallets } from './wallets';
-import i18n from '../../i18n/i18n';
 
 const initialState = [
 	{
