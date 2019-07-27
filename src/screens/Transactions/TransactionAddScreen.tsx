@@ -1,12 +1,13 @@
 import { Formik } from 'formik';
+import { first } from 'lodash';
 import { Container, Content } from 'native-base';
 import React, { Component } from 'react';
 import { NavigationInjectedProps } from 'react-navigation';
 import { connect } from 'react-redux';
+import * as Yup from 'yup';
 import { TRANSACTION_ADD } from '../../store/reducers/transactions';
 import ICategory from '../../types/Category';
 import ICurrency from '../../types/Currency';
-import { ITransactionType } from '../../types/Transaction';
 import IWallet from '../../types/Wallet';
 import TransactionForm from './TransactionForm';
 
@@ -17,15 +18,19 @@ interface TransactionAddScreenProps extends NavigationInjectedProps {
 	transactionAdd: (values) => void;
 }
 
+const TransactionAddSchema = Yup.object().shape({
+	amount: Yup.number().moreThan(0).required("Amount shouldn't be zero"),
+});
+
 export class TransactionAddScreen extends Component<TransactionAddScreenProps> {
 	public get initialValues() {
 		const { categories, wallets, currencies } = this.props;
 		return {
 			amount: '',
-			from_wallet_id: wallets[0].id,
+			from_wallet_id: first(wallets)!.id,
 			to_wallet_id: '',
-			category_id: categories[0].id,
-			currency_id: currencies[0].id,
+			category_id: first(categories)!.id,
+			currency_id: first(currencies)!.id,
 			description: '',
 			type: 'outcome',
 			date: new Date()
@@ -41,6 +46,7 @@ export class TransactionAddScreen extends Component<TransactionAddScreenProps> {
 						initialValues={this.initialValues}
 						onSubmit={this.handleSubmit}
 						onReset={this.handleReset}
+						validationSchema={TransactionAddSchema}
 						render={(props) => (
 							<TransactionForm
 								isNew

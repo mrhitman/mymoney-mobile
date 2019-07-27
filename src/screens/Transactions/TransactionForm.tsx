@@ -1,4 +1,4 @@
-import { FormikProps, Formik } from 'formik';
+import { FormikProps } from 'formik';
 import { Button, CheckBox, DatePicker, Input, Item, Label, Text, View } from 'native-base';
 import React, { Component, Fragment } from 'react';
 import { Picker, StyleSheet } from 'react-native';
@@ -44,10 +44,11 @@ export class TransactionForm extends Component<TransactionFormProps, Transaction
 	public render() {
 		const { formik, wallets, categories, currencies, isNew } = this.props;
 		const operation = OperationsSymbols[this.state.operation];
+		global.console.log(formik.errors);
 		return (
 			<Fragment>
 				<View style={styles.amountContainer}>
-					<Item inlineLabel style={{ flexGrow: 5, marginRight: 0 }}>
+					<Item inlineLabel style={{ flexGrow: 5, marginRight: 0 }} error={!!formik.errors.name}>
 						<View onTouchEndCapture={this.handleChangeOperation}>
 							<Label style={{ marginRight: 25 }}>
 								<OperationIcon operation={operation} />
