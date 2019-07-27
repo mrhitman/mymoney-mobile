@@ -10,7 +10,7 @@ import IWallet from '../types/Wallet';
 import account from './reducers/account';
 import categories from './reducers/categories';
 import currencies from './reducers/currencies';
-import rates from './reducers/rates';
+import rates, { RatesActions } from './reducers/reates';
 import styling from './reducers/styling';
 import transactions, { TransactionActions } from './reducers/transactions';
 import wallets, { WalletActions } from './reducers/wallets';
@@ -36,7 +36,7 @@ const persistConfig = {
 };
 
 type States = IWallet[] | ITransaction[] | ICategory[] | ICurrency[] | Api | any;
-type Actions = WalletActions | TransactionActions | any;
+type Actions = WalletActions | TransactionActions | RatesActions | any;
 const reducers = combineReducers<States, Actions>({
 	account,
 	wallets,
