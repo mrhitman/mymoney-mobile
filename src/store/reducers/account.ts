@@ -1,6 +1,5 @@
-import { TRANSACTION_ADD } from './transactions';
-import { defaultCurrencies } from './currencies';
 import i18n from '../../i18n/i18n';
+import { defaultCurrencies } from './currencies';
 
 export enum Languages {
 	ru,
