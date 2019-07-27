@@ -6,7 +6,7 @@ interface IRates {
 	rates: { [base: string]: number };
 }
 
-const initialState = {
+const initialState: IRates = {
 	timestamp: null,
 	base: 'EUR',
 	rates: {}

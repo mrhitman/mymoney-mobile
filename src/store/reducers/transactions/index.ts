@@ -8,9 +8,9 @@ export const TRANSACTION_ADD = 'TRANSACTION_ADD';
 export const TRANSACTION_EDIT = 'TRANSACTION_EDIT';
 export const TRANSACTION_DELETE = 'TRANSACTION_DELETE';
 
-export type TransactionTypes = TransactionAddAction | TransactionEditAction | TransactionDeleteAction;
+export type TransactionActions = TransactionAddAction | TransactionEditAction | TransactionDeleteAction;
 
-export default (state: ITransaction[] = initialState, action: TransactionTypes) => {
+export default (state: ITransaction[] = initialState, action: TransactionActions) => {
 	switch (action.type) {
 		case TRANSACTION_ADD:
 			return create(state, action);

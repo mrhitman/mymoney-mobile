@@ -4,14 +4,18 @@ import { createTransform, persistReducer, persistStore } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 import devToolsEnhancer from 'remote-redux-devtools';
+import Api from '../../src/api';
+import ITransaction from '../types/Transaction';
+import IWallet from '../types/Wallet';
 import account from './reducers/account';
 import categories from './reducers/categories';
 import currencies from './reducers/currencies';
-import styling from './reducers/styling';
-import transactions from './reducers/transactions';
-import wallets from './reducers/wallets';
 import rates from './reducers/rates';
-import Api from '../../src/api';
+import styling from './reducers/styling';
+import transactions, { TransactionActions } from './reducers/transactions';
+import wallets, { WalletActions } from './reducers/wallets';
+import ICategory from '../types/Category';
+import ICurrency from '../types/Currency';
 
 const SetTransform = createTransform(
 	(inboundState: any[], key) => {
@@ -31,7 +35,9 @@ const persistConfig = {
 	blacklist: [ 'api' ]
 };
 
-const reducers = combineReducers({
+type States = IWallet[] | ITransaction[] | ICategory[] | ICurrency[] | Api | any;
+type Actions = WalletActions | TransactionActions | any;
+const reducers = combineReducers<States, Actions>({
 	account,
 	wallets,
 	transactions,

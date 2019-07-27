@@ -1,11 +1,11 @@
 import { find } from 'lodash';
 import { DateTime } from 'luxon';
-import { ITransactionType } from '../../../types/Transaction';
+import ITransaction, { ITransactionType } from '../../../types/Transaction';
 import { defaultCategories } from '../categories';
 import { defaultCurrencies } from '../currencies';
-import { defaultWallets } from '../wallets';
+import defaultWallets from '../wallets/initial';
 
-const initialState = [
+const initialState: ITransaction[] = [
 	{
 		id: '1',
 		category_id: find(defaultCategories, (category) => category.name === 'coffee')!.id,

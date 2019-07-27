@@ -1,8 +1,8 @@
-import { TransactionTypes } from './reducers/transactions';
-import { WalletTypes } from './reducers/wallets';
+import { TransactionActions } from './reducers/transactions';
+import { WalletActions } from './reducers/wallets';
 import store from './Store';
 
-export type StoreTypes = WalletTypes | TransactionTypes;
+export type StoreTypes = WalletActions | TransactionActions;
 export default store;
 export { persistor } from './Store';
 
